@@ -46,29 +46,19 @@ Bei einem Doppelklick das Fahrzeug soll ein ähnlicher Popup erscheinen, in dem 
 
 | Test | Erwartung | 
 |:----:|:---------:|
-| Besitzer mit dem Namen „Max“ erstellen. | Es soll ein neuer Besitzer mit vorhanden sein, der den Namen „Max“ hat. |
-| Er soll noch kein Fahrzeug besitzen | Besitze löschen. |
-| Der ausgewählte Besitzer soll gelöscht werden. Alle Fahrzeuge, die der Besitzer besaß, sollen nun keinen Besitzer mehr haben. | Der Besitzer soll nicht mehr angezeigt werden. |
+| Besitzer mit dem Namen „Max“ erstellen. | Es soll ein neuer Besitzer mit vorhanden sein, der den Namen „Max“ hat. Er soll noch kein Fahrzeug besitzen |
+| Besitzer löschen. | Der ausgewählte Besitzer soll gelöscht werden. Alle Fahrzeuge, die der Besitzer besaß, sollen nun keinen Besitzer mehr haben. Der Besitzer soll nicht mehr angezeigt werden. |
 | Namen des Besitzers ändern. | Der ausgewählte Besitzer soll einen neuen Namen bekommen. Alle Stellen, an denen der Name referenziert wird, sollen den neuen Namen anzeigen. |
 | Alle Besitzer zeigen | Es sollen alle zuvor erstellten und nicht bereits gelöschten Besitzer angezeigt werden. |
-| Fahrzeug mit dem Typen „VW Golf“ erstellen. | Es soll ein neues Fahrzeug mit einer neuen ID vorhanden sein, der den Typen „VW Golf“ hat. |
-| Das Fahrzeug soll noch keinen Besitzer haben. | Fahrzeug löschen. |
-| Das ausgewählte Fahrzeug soll gelöscht werden. Der Besitzer des Fahrzeugs soll dieses Fahrzeug nicht mehr besitzen. | Das Fahrzeug soll nicht mehr angezeigt werden. |
+| Fahrzeug mit dem Typen „VW Golf“ erstellen. | Es soll ein neues Fahrzeug mit einer neuen ID vorhanden sein, der den Typen „VW Golf“ hat. | Das Fahrzeug soll noch keinen Besitzer haben. |
+| Fahrzeug löschen. | Das ausgewählte Fahrzeug soll gelöscht werden. Der Besitzer des Fahrzeugs soll dieses Fahrzeug nicht mehr besitzen. Das Fahrzeug soll nicht mehr angezeigt werden. |
 | Typ des Fahrzeugs ändern. | Das ausgewählte Fahrzeug soll einen neuen Typen bekommen. Alle stellen, an denen der Typ referenziert wird, sollen den neuen Typen anzeigen. |
 | Alle Fahrzeuge anzeigen. | Es sollen alle zuvor erstellten und nicht bereits gelöschten Fahrzeuge angezeigt werden. |
-| Alle Fahrzeuge pro Benutzer anzeigen. 
+| Alle Fahrzeuge pro Benutzer anzeigen. | Alle Fahrzeuge anzeigen, die zum ausgewählten Besitzer gehören. |
+| Den Besitzer des Fahrzeugs anzeigen. | Den Besitzer des ausgewählten Fahrzeugs anzeigen. |
+| Dem Fahrzeug einen Besitzer geben. | Das ausgewählte Fahrzeug soll dem ausgewählten Benutzer gehören. Wenn das Fahrzeug bereits einen Besitzer hat soll das Besitztum automatisch gelöscht werden. |
+| Dem Besitzer des Fahrzeugs entfernen. | Das ausgewählte Fahrzeug soll keinen Besitzer mehr haben. Der Besitzer soll dennoch seine übrigen Fahrzeuge behalten. |
 
-Alle Fahrzeuge anzeigen, die zum ausgewählten Besitzer gehören. 
+## Datenverwaltung 
 
-Den Besitzer des Fahrzeugs anzeigen. 
-
-Den Besitzer des ausgewählten Fahrzeugs anzeigen. 
-
-Dem Fahrzeug einen Besitzer geben. 
-
-Das ausgewählte Fahrzeug soll dem ausgewählten Benutzer gehören. Wenn das Fahrzeug bereits einen Besitzer hat soll das Besitztum automatisch gelöscht werden. 
-
-Dem Besitzer des Fahrzeugs entfernen. 
-
-Das ausgewählte Fahrzeug soll keinen Besitzer mehr haben. Der Besitzer soll dennoch seine übrigen Fahrzeuge behalten. 
-
+Die Pflichtdatenbank implementieren wir mit SQLite, weil es keinen separaten Datenbank Server benötigt. Für die Wahldatenhaltung haben wir uns für JSON entschieden.
