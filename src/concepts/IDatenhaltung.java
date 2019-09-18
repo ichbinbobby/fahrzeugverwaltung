@@ -4,16 +4,19 @@ import models.Besitzer;
 import models.Fahrzeug;
 
 public interface IDatenhaltung {
-    Besitzer[] GetAllBeistzer();
+    Besitzer[] getAllBeistzer();
 
-    Fahrzeug[] GetAllFahzeuge();
+    Fahrzeug[] getAllFahzeuge();
 
-    Besitzer GetBeistzer(int beistzerId);
+    Besitzer getBeistzer(int beistzerId);
 
-    Fahrzeug GetFahrzeug(int fahrzeugId);
+    Fahrzeug getFahrzeug(int fahrzeugId);
 
-    boolean SaveBesitzer(Besitzer besitzer);
+    boolean saveBesitzer(Besitzer besitzer);
 
-    boolean SaveFahrzeug(Fahrzeug fahrzeug);
+    boolean saveFahrzeug(Fahrzeug fahrzeug);
 
+    boolean deleteFahrzeug(int fahrzeugId);
+
+    boolean deleteBesitzer(int besitzerId);
 }
