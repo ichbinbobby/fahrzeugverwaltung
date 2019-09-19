@@ -1,4 +1,4 @@
 package models;
 
-public class Besitzer {
+public class Besitzer extends BesitzerMeta {
 }
