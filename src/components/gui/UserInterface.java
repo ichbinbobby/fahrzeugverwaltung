@@ -24,12 +24,14 @@ public class UserInterface {
 
         int width = 400;
         int height = 600;
+
+        besitzerTextField.setBounds(0,0,200,50);
+        fahrzeugTextField.setBounds(0,0,200,50);
         /*
         //int leftGap = (int) (width*0.2);
         //int rightGap= (int) (width*0.8);
 
-        besitzerTextField.setBounds(20,50,150,50);
-        fahrzeugTextField.setBounds(230,50,150,50);
+
         addBesitzerBtn.setBounds(20,150,100,40);
         addFahrzeugBtn.setBounds(230,150,100,40);
 
@@ -42,6 +44,8 @@ public class UserInterface {
         l1.addElement("Angela");
         l1.addElement("Greta");
         JList<String> besitzerList = new JList<>(l1);
+        JScrollPane sp1 = new JScrollPane(besitzerList);
+        besitzerList.setPreferredSize(new Dimension(200, 200));
 
         DefaultListModel<String> l2 = new DefaultListModel<>();
         l2.addElement("Ferrari");
@@ -49,6 +53,8 @@ public class UserInterface {
         l2.addElement("Tiger");
         l2.addElement("Tesla");
         JList<String> fahrzeugList = new JList<>(l2);
+        JScrollPane sp2 = new JScrollPane(fahrzeugList);
+        fahrzeugList.setPreferredSize(new Dimension(200, 200));
 
         gui.add(besitzerPanel);
         gui.add(fahrzeugPanel);
@@ -57,11 +63,13 @@ public class UserInterface {
         besitzerPanel.add(addBesitzerBtn);
         besitzerPanel.add(besitzerList);
         besitzerPanel.add(rmBesitzerBtn);
+        besitzerPanel.add(sp1);
 
         fahrzeugPanel.add(fahrzeugTextField);
         fahrzeugPanel.add(addFahrzeugBtn);
         fahrzeugPanel.add(fahrzeugList);
         fahrzeugPanel.add(rmFahrzeugBtn);
+        fahrzeugPanel.add(sp2);
 
         f.add(gui);
         f.setTitle("Fahrzeugverwaltung");
