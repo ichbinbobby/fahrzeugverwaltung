@@ -25,18 +25,17 @@ public class GraphicalUserInterface {
         l1.addElement("Angela");
         l1.addElement("Greta");
         JList<String> besitzerList = new JList<>(l1);
-        JScrollPane sp1 = new JScrollPane(besitzerList);
-        //gui.besitzerScrollPane.add(sp1);
+        gui.besitzerScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        gui.besitzerScrollPane.setViewportView(besitzerList);
 
-        /*
         DefaultListModel<String> l2 = new DefaultListModel<>();
         l2.addElement("Ferrari");
         l2.addElement("Mercedes");
         l2.addElement("Tiger");
         l2.addElement("Tesla");
         JList<String> fahrzeugList = new JList<>(l2);
-        //JScrollPane sp2 = new JScrollPane(fahrzeugList);
-        */
+        gui.fahrzeugScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        gui.fahrzeugScrollPane.setViewportView(fahrzeugList);
 
         f.setContentPane(gui.mainPanel);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
