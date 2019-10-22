@@ -1,6 +1,12 @@
 package models;
 
 public class BesitzerMeta {
+
+    public BesitzerMeta(int id, String name) {
+        setBesitzerId(id);
+        setName(name);
+    }
+
     private int _besitzerId;
     private String _name;
 
