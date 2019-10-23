@@ -1,5 +1,7 @@
 package components.gui;
 
+import com.sun.xml.internal.fastinfoset.util.ValueArrayResourceException;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,12 +18,35 @@ public class GraphicalUserInterface {
     private JButton deleteFahrzeugBtn;
     private JScrollPane besitzerScrollPane;
     private JScrollPane fahrzeugScrollPane;
+    private JButton verbindenButton;
 
     public GraphicalUserInterface() {
-        addBesitzerBtn.addActionListener(e -> System.out.println(addBesitzerTextField.getText()));
-        addFahrzeugBtn.addActionListener(e -> System.out.println(addFahrzeugTextField.getText()));
+        addBesitzerBtn.addActionListener(e -> {
+            String besitzer = addBesitzerTextField.getText();
+            System.out.println(besitzer);
+            ((DefaultListModel<String>)((JList<String>)besitzerScrollPane.getViewport().getView()).getModel()).addElement(besitzer);
+        });
+        addFahrzeugBtn.addActionListener(e -> {
+            String fahrzeug = addFahrzeugTextField.getText();
+            System.out.println(fahrzeug);
+            ((DefaultListModel<String>)((JList<String>)fahrzeugScrollPane.getViewport().getView()).getModel()).addElement(fahrzeug);
+        });
         deleteBesitzerBtn.addActionListener(e -> System.out.println(((JList<String>)besitzerScrollPane.getViewport().getView()).getSelectedValue()));
         deleteFahrzeugBtn.addActionListener(e -> System.out.println(((JList<String>)fahrzeugScrollPane.getViewport().getView()).getSelectedValue()));
+        verbindenButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String besitzer;
+                besitzer = ((JList<String>)besitzerScrollPane.getViewport().getView()).getSelectedValue();
+                String fahrzeug;
+                fahrzeug = ((JList<String>)fahrzeugScrollPane.getViewport().getView()).getSelectedValue();
+                if( besitzer == null || fahrzeug == null ) {
+                    System.out.println("Es müssen beide ausgewählt werden.");
+                } else {
+                    System.out.println("Verbinde Besitzer " + besitzer + " mit Fahrzeug " + fahrzeug);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
