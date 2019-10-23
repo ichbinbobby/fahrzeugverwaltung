@@ -1,6 +1,8 @@
 package components.gui;
 
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GraphicalUserInterface {
     private JPanel mainPanel;
@@ -14,6 +16,13 @@ public class GraphicalUserInterface {
     private JButton deleteFahrzeugBtn;
     private JScrollPane besitzerScrollPane;
     private JScrollPane fahrzeugScrollPane;
+
+    public GraphicalUserInterface() {
+        addBesitzerBtn.addActionListener(e -> System.out.println(addBesitzerTextField.getText()));
+        addFahrzeugBtn.addActionListener(e -> System.out.println(addFahrzeugTextField.getText()));
+        deleteBesitzerBtn.addActionListener(e -> System.out.println(((JList<String>)besitzerScrollPane.getViewport().getView()).getSelectedValue()));
+        deleteFahrzeugBtn.addActionListener(e -> System.out.println(((JList<String>)fahrzeugScrollPane.getViewport().getView()).getSelectedValue()));
+    }
 
     public static void main(String[] args) {
         JFrame f = new JFrame();
