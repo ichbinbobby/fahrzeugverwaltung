@@ -31,8 +31,22 @@ public class GraphicalUserInterface {
             addScrollPaneElement(fahrzeugScrollPane, fahrzeug);
             addFahrzeugTextField.setText("");
         });
-        deleteBesitzerBtn.addActionListener(e -> System.out.println(((JList<String>)besitzerScrollPane.getViewport().getView()).getSelectedValue()));
-        deleteFahrzeugBtn.addActionListener(e -> System.out.println(((JList<String>)fahrzeugScrollPane.getViewport().getView()).getSelectedValue()));
+        deleteBesitzerBtn.addActionListener(e -> {
+            int index = ((JList<String>) besitzerScrollPane.getViewport().getView()).getSelectedIndex();
+            String value = ((JList<String>)besitzerScrollPane.getViewport().getView()).getSelectedValue();
+            if(value != null){
+                System.out.println(value);
+                deleteScrollPaneElement(besitzerScrollPane, index);
+            }
+        });
+        deleteFahrzeugBtn.addActionListener(e -> {
+            int index = ((JList<String>) fahrzeugScrollPane.getViewport().getView()).getSelectedIndex();
+            String value = ((JList<String>)fahrzeugScrollPane.getViewport().getView()).getSelectedValue();
+            if(value != null){
+                System.out.println(value);
+                deleteScrollPaneElement(fahrzeugScrollPane, index);
+            }
+        });
         verbindenButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,11 +95,21 @@ public class GraphicalUserInterface {
 
     private void addScrollPaneElement(JScrollPane pane, String element) {
         (
-                (DefaultListModel<String>) (
-                        (JList<String>) pane
-                                .getViewport()
-                                .getView()
-                ).getModel()
+            (DefaultListModel<String>) (
+                (JList<String>) pane
+                    .getViewport()
+                    .getView()
+            ).getModel()
         ).addElement(element);
+    }
+
+    private void deleteScrollPaneElement(JScrollPane pane, int index) {
+        (
+            (DefaultListModel<String>) (
+                (JList<String>) pane
+                    .getViewport()
+                    .getView()
+            ).getModel()
+        ).remove(index);
     }
 }
