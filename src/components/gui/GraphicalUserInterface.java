@@ -1,7 +1,5 @@
 package components.gui;
 
-import com.sun.xml.internal.fastinfoset.util.ValueArrayResourceException;
-
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -24,12 +22,14 @@ public class GraphicalUserInterface {
         addBesitzerBtn.addActionListener(e -> {
             String besitzer = addBesitzerTextField.getText();
             System.out.println(besitzer);
-            ((DefaultListModel<String>)((JList<String>)besitzerScrollPane.getViewport().getView()).getModel()).addElement(besitzer);
+            addScrollPaneElement(besitzerScrollPane, besitzer);
+            addBesitzerTextField.setText("");
         });
         addFahrzeugBtn.addActionListener(e -> {
             String fahrzeug = addFahrzeugTextField.getText();
             System.out.println(fahrzeug);
-            ((DefaultListModel<String>)((JList<String>)fahrzeugScrollPane.getViewport().getView()).getModel()).addElement(fahrzeug);
+            addScrollPaneElement(fahrzeugScrollPane, fahrzeug);
+            addFahrzeugTextField.setText("");
         });
         deleteBesitzerBtn.addActionListener(e -> System.out.println(((JList<String>)besitzerScrollPane.getViewport().getView()).getSelectedValue()));
         deleteFahrzeugBtn.addActionListener(e -> System.out.println(((JList<String>)fahrzeugScrollPane.getViewport().getView()).getSelectedValue()));
@@ -77,5 +77,15 @@ public class GraphicalUserInterface {
         f.setTitle("Fahrzeugverwaltung");
         f.setSize(400,600);
         f.setVisible(true);
+    }
+
+    private void addScrollPaneElement(JScrollPane pane, String element) {
+        (
+                (DefaultListModel<String>) (
+                        (JList<String>) pane
+                                .getViewport()
+                                .getView()
+                ).getModel()
+        ).addElement(element);
     }
 }
