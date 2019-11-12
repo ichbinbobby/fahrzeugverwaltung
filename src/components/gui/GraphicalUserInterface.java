@@ -69,10 +69,8 @@ public class GraphicalUserInterface {
             }
         });
         verbindenButton.addActionListener(e -> {
-            String besitzer;
-            besitzer = besitzerList.getSelectedValue();
-            String fahrzeug;
-            fahrzeug = fahrzeugList.getSelectedValue();
+            String besitzer = besitzerList.getSelectedValue();
+            String fahrzeug = fahrzeugList.getSelectedValue();
             if( besitzer == null || fahrzeug == null ) {
                 System.out.println("Es müssen beide ausgewählt werden.");
             } else {
