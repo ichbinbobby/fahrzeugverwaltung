@@ -5,6 +5,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class GraphicalUserInterface {
+    private final DefaultListModel<String> besitzerListModel;
+    private final DefaultListModel<String> fahrzeugListModel;
+    private final JList<String> besitzerList;
+    private final JList<String> fahrzeugList;
     private JPanel mainPanel;
     private JPanel besitzerPanel;
     private JPanel fahrzeugPanel;
@@ -19,46 +23,60 @@ public class GraphicalUserInterface {
     private JButton verbindenButton;
 
     public GraphicalUserInterface() {
+        this.besitzerListModel = new DefaultListModel<>();
+        this.besitzerListModel.addElement("Sebastian");
+        this.besitzerListModel.addElement("Mark");
+        this.besitzerListModel.addElement("Angela");
+        this.besitzerListModel.addElement("Greta");
+        this.besitzerList = new JList<>(this.besitzerListModel);
+        this.besitzerScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        this.besitzerScrollPane.setViewportView(besitzerList);
+
+        this.fahrzeugListModel = new DefaultListModel<>();
+        this.fahrzeugListModel.addElement("Ferrari");
+        this.fahrzeugListModel.addElement("Mercedes");
+        this.fahrzeugListModel.addElement("Tiger");
+        this.fahrzeugListModel.addElement("Tesla");
+        this.fahrzeugList = new JList<>(this.fahrzeugListModel);
+        this.fahrzeugScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+        this.fahrzeugScrollPane.setViewportView(fahrzeugList);
         addBesitzerBtn.addActionListener(e -> {
             String besitzer = addBesitzerTextField.getText();
             System.out.println(besitzer);
-            addScrollPaneElement(besitzerScrollPane, besitzer);
+            addElement(this.besitzerListModel, besitzer);
             addBesitzerTextField.setText("");
         });
         addFahrzeugBtn.addActionListener(e -> {
             String fahrzeug = addFahrzeugTextField.getText();
             System.out.println(fahrzeug);
-            addScrollPaneElement(fahrzeugScrollPane, fahrzeug);
+            addElement(this.fahrzeugListModel, fahrzeug);
             addFahrzeugTextField.setText("");
         });
         deleteBesitzerBtn.addActionListener(e -> {
-            int index = ((JList<String>) besitzerScrollPane.getViewport().getView()).getSelectedIndex();
-            String value = ((JList<String>)besitzerScrollPane.getViewport().getView()).getSelectedValue();
+            int index = besitzerList.getSelectedIndex();
+            String value = besitzerList.getSelectedValue();
             if(value != null){
                 System.out.println(value);
-                deleteScrollPaneElement(besitzerScrollPane, index);
+                deleteElement(this.besitzerListModel, index);
             }
         });
         deleteFahrzeugBtn.addActionListener(e -> {
-            int index = ((JList<String>) fahrzeugScrollPane.getViewport().getView()).getSelectedIndex();
-            String value = ((JList<String>)fahrzeugScrollPane.getViewport().getView()).getSelectedValue();
+            int index = fahrzeugList.getSelectedIndex();
+            String value = fahrzeugList.getSelectedValue();
             if(value != null){
                 System.out.println(value);
-                deleteScrollPaneElement(fahrzeugScrollPane, index);
+                deleteElement(this.fahrzeugListModel, index);
             }
         });
-        verbindenButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                String besitzer;
-                besitzer = ((JList<String>)besitzerScrollPane.getViewport().getView()).getSelectedValue();
-                String fahrzeug;
-                fahrzeug = ((JList<String>)fahrzeugScrollPane.getViewport().getView()).getSelectedValue();
-                if( besitzer == null || fahrzeug == null ) {
-                    System.out.println("Es müssen beide ausgewählt werden.");
-                } else {
-                    System.out.println("Verbinde Besitzer " + besitzer + " mit Fahrzeug " + fahrzeug);
-                }
+        verbindenButton.addActionListener(e -> {
+            String besitzer;
+            besitzer = besitzerList.getSelectedValue();
+            String fahrzeug;
+            fahrzeug = fahrzeugList.getSelectedValue();
+            if( besitzer == null || fahrzeug == null ) {
+                System.out.println("Es müssen beide ausgewählt werden.");
+            } else {
+                System.out.println("Verbinde Besitzer " + besitzer + " mit Fahrzeug " + fahrzeug);
             }
         });
     }
@@ -66,24 +84,6 @@ public class GraphicalUserInterface {
     public static void main(String[] args) {
         JFrame f = new JFrame();
         GraphicalUserInterface gui = new GraphicalUserInterface();
-
-        DefaultListModel<String> l1 = new DefaultListModel<>();
-        l1.addElement("Sebastian");
-        l1.addElement("Mark");
-        l1.addElement("Angela");
-        l1.addElement("Greta");
-        JList<String> besitzerList = new JList<>(l1);
-        gui.besitzerScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        gui.besitzerScrollPane.setViewportView(besitzerList);
-
-        DefaultListModel<String> l2 = new DefaultListModel<>();
-        l2.addElement("Ferrari");
-        l2.addElement("Mercedes");
-        l2.addElement("Tiger");
-        l2.addElement("Tesla");
-        JList<String> fahrzeugList = new JList<>(l2);
-        gui.fahrzeugScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
-        gui.fahrzeugScrollPane.setViewportView(fahrzeugList);
 
         f.setContentPane(gui.mainPanel);
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -93,23 +93,11 @@ public class GraphicalUserInterface {
         f.setVisible(true);
     }
 
-    private void addScrollPaneElement(JScrollPane pane, String element) {
-        (
-            (DefaultListModel<String>) (
-                (JList<String>) pane
-                    .getViewport()
-                    .getView()
-            ).getModel()
-        ).addElement(element);
+    private <T> void addElement(DefaultListModel<T> list, T element) {
+        list.addElement(element);
     }
 
-    private void deleteScrollPaneElement(JScrollPane pane, int index) {
-        (
-            (DefaultListModel<String>) (
-                (JList<String>) pane
-                    .getViewport()
-                    .getView()
-            ).getModel()
-        ).remove(index);
+    private <T> void deleteElement(DefaultListModel<T> list, int index) {
+        list.remove(index);
     }
 }
