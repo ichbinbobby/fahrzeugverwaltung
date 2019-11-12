@@ -4,9 +4,6 @@ import models.BesitzerMeta;
 import models.FahrzeugMeta;
 import org.jetbrains.annotations.NotNull;
 
-import models.BesitzerMeta;
-import models.FahrzeugMeta;
-
 import javax.swing.*;
 import java.lang.reflect.Proxy;
 import java.util.function.Function;
@@ -36,6 +33,8 @@ public class GraphicalUserInterface {
         this.besitzerListModel.addElement(new BesitzerMeta(3, "Angela"));
         this.besitzerListModel.addElement(new BesitzerMeta(4, "Greta"));
         this.besitzerList = new JList<>(this.besitzerListModel);
+        SetValueCallback(BesitzerMeta.class, besitzerList, BesitzerMeta::getName);
+
         this.besitzerScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.besitzerScrollPane.setViewportView(besitzerList);
 
@@ -45,18 +44,20 @@ public class GraphicalUserInterface {
         this.fahrzeugListModel.addElement(new FahrzeugMeta(3, "Tiger"));
         this.fahrzeugListModel.addElement(new FahrzeugMeta(4, "Tesla"));
         this.fahrzeugList = new JList<>(this.fahrzeugListModel);
+        SetValueCallback(FahrzeugMeta.class, fahrzeugList, FahrzeugMeta::getBezeichnung);
+
         this.fahrzeugScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.fahrzeugScrollPane.setViewportView(fahrzeugList);
         addBesitzerBtn.addActionListener(e -> {
             String besitzer = addBesitzerTextField.getText();
             System.out.println(besitzer);
-            addElement(this.besitzerListModel, besitzer);
+            this.besitzerListModel.addElement(new BesitzerMeta(-1, besitzer));
             addBesitzerTextField.setText("");
         });
         addFahrzeugBtn.addActionListener(e -> {
             String fahrzeug = addFahrzeugTextField.getText();
             System.out.println(fahrzeug);
-            addElement(this.fahrzeugListModel, fahrzeug);
+            this.fahrzeugListModel.addElement(new FahrzeugMeta(-1, fahrzeug));
             addFahrzeugTextField.setText("");
         });
         deleteBesitzerBtn.addActionListener(e -> {
@@ -96,10 +97,6 @@ public class GraphicalUserInterface {
         f.setTitle("Fahrzeugverwaltung");
         f.setSize(400,600);
         f.setVisible(true);
-    }
-
-    private <T> void addElement(DefaultListModel<T> list, T element) {
-        list.addElement(element);
     }
 
     private <T> void deleteElement(DefaultListModel<T> list, int index) {
