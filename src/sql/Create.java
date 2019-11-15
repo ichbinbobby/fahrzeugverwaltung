@@ -2,7 +2,7 @@ package sql;
 
 import java.sql.*;
 
-public class SQLiteJDBC {
+public class Create {
     public static void main( String args[] ) {
         Connection c = null;
         Statement stmt = null;
@@ -25,6 +25,7 @@ public class SQLiteJDBC {
                   " FOREIGN KEY (BesitzerID) REFERENCES BESITZER(ID))";
             stmt.executeUpdate(sql);
 
+            // Initial Besitzer table values
             sql = "INSERT INTO BESITZER (ID, NAME) " +
                     "VALUES (1, 'Sebastian');";
             stmt.executeUpdate(sql);
@@ -38,6 +39,7 @@ public class SQLiteJDBC {
                     "VALUES (4, 'Greta');";
             stmt.executeUpdate(sql);
 
+            // Initial Fahrzeug table values
             sql = "INSERT INTO FAHRZEUG (ID, NAME, BesitzerID) " +
                     "VALUES (1, 'Ferrari', 1);";
             stmt.executeUpdate(sql);
