@@ -8,8 +8,7 @@ public class BesitzerMeta {
     }
 
     public BesitzerMeta(BesitzerMeta other) {
-        setBesitzerId(other._besitzerId);
-        setName(other._name);
+        this(other.getBesitzerId(), other.getName());
     }
 
     private int _besitzerId;
