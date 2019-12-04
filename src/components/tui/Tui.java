@@ -1,5 +1,5 @@
 package components.tui;
-import concepts.IFachkonzept;
+
 import models.BesitzerMeta;
 
 import java.util.Scanner;
@@ -57,10 +57,8 @@ public class Tui {
 
 //    private static void viewUser(IFachkonzept concept, Scanner input){
     private static void viewUser(Scanner input){
-        BesitzerMeta user1 = new BesitzerMeta();
-        user1.setName("Greta");
-        BesitzerMeta user2 = new BesitzerMeta();
-        user2.setName("Sebastian");
+        BesitzerMeta user1 = new BesitzerMeta("Greta");
+        BesitzerMeta user2 = new BesitzerMeta("Sebastian");
         BesitzerMeta[] users = {user1, user2};
 //        BesitzerMeta[] users = concept.getAllBesitzer();
         StringBuilder outputString = new StringBuilder();

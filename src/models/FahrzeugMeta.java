@@ -8,6 +8,10 @@ public class FahrzeugMeta {
         this(other.getFahrzeugId(), other.getBezeichnung());
     }
 
+    public FahrzeugMeta(String bezeichnung) {
+        this(-1, bezeichnung);
+    }
+
     public FahrzeugMeta(int fahrzeugId, String bezeichnung) {
         this._fahrzeugId = fahrzeugId;
         this._bezeichnung = bezeichnung;

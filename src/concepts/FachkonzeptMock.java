@@ -22,7 +22,7 @@ public class FachkonzeptMock implements IFachkonzept {
         besitzerList.put(2, new Besitzer(2, "Max"));
         besitzerList.put(3, new Besitzer(3, "Franz"));
         besitzerList.put(4, new Besitzer(4, "Wilfred"));
-        besitzerList.put(5, new Besitzer(5, "Tina"));
+        besitzerList.put(5, new Besitzer(5, "Listate"));
         besitzerList.put(6, new Besitzer(6, "Jana"));
         besitzerList.put(7, new Besitzer(7, "Thomas"));
 
