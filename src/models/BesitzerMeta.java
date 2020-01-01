@@ -2,14 +2,17 @@ package models;
 
 public class BesitzerMeta {
 
+    public BesitzerMeta(String name) {
+        this(-1, name);
+    }
+
     public BesitzerMeta(int id, String name) {
         setBesitzerId(id);
         setName(name);
     }
 
     public BesitzerMeta(BesitzerMeta other) {
-        setBesitzerId(other._besitzerId);
-        setName(other._name);
+        this(other.getBesitzerId(), other.getName());
     }
 
     private int _besitzerId;
