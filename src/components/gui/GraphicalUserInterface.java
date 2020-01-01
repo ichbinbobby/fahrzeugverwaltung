@@ -51,13 +51,13 @@ public class GraphicalUserInterface {
         addBesitzerBtn.addActionListener(e -> {
             String besitzer = addBesitzerTextField.getText();
             System.out.println(besitzer);
-            this.besitzerListModel.addElement(new BesitzerMeta(-1, besitzer));
+            this.besitzerListModel.addElement(new BesitzerMeta(besitzer));
             addBesitzerTextField.setText("");
         });
         addFahrzeugBtn.addActionListener(e -> {
             String fahrzeug = addFahrzeugTextField.getText();
             System.out.println(fahrzeug);
-            this.fahrzeugListModel.addElement(new FahrzeugMeta(-1, fahrzeug));
+            this.fahrzeugListModel.addElement(new FahrzeugMeta(fahrzeug));
             addFahrzeugTextField.setText("");
         });
         deleteBesitzerBtn.addActionListener(e -> {
