@@ -1,5 +1,7 @@
 package components.gui;
 
+import sql.Delete;
+
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -40,6 +42,9 @@ public class GraphicalUserInterface {
         this.fahrzeugList = new JList<>(this.fahrzeugListModel);
         this.fahrzeugScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.fahrzeugScrollPane.setViewportView(fahrzeugList);
+
+        Delete d = new Delete();
+
         addBesitzerBtn.addActionListener(e -> {
             String besitzer = addBesitzerTextField.getText();
             System.out.println(besitzer);
@@ -58,6 +63,7 @@ public class GraphicalUserInterface {
             if(value != null){
                 System.out.println(value);
                 deleteElement(this.besitzerListModel, index);
+                d.deleteBesitzer(index);
             }
         });
         deleteFahrzeugBtn.addActionListener(e -> {
@@ -66,6 +72,7 @@ public class GraphicalUserInterface {
             if(value != null){
                 System.out.println(value);
                 deleteElement(this.fahrzeugListModel, index);
+                d.deleteFahrzeug(index);
             }
         });
         verbindenButton.addActionListener(e -> {

@@ -13,44 +13,44 @@ public class Create {
 
             stmt = c.createStatement();
 
-            String sql = "CREATE TABLE BESITZER " +
-                  "(ID INT PRIMARY KEY    NOT NULL," +
-                  " NAME           TEXT   NOT NULL)";
+            String sql = "CREATE TABLE Besitzer " +
+                  "(Id INT PRIMARY KEY    NOT NULL," +
+                  " Name           TEXT   NOT NULL)";
             stmt.executeUpdate(sql);
 
-            sql = "CREATE TABLE FAHRZEUG " +
-                  "(ID INT PRIMARY KEY    NOT NULL," +
-                  " NAME           TEXT   NOT NULL," +
-                  " BesitzerID     INT    NOT NULL," +
-                  " FOREIGN KEY (BesitzerID) REFERENCES BESITZER(ID))";
+            sql = "CREATE TABLE Fahrzeug " +
+                  "(Id INT PRIMARY KEY    NOT NULL," +
+                  " Name           TEXT   NOT NULL," +
+                  " BesitzerId     INT    NOT NULL," +
+                  " FOREIGN KEY (BesitzerId) REFERENCES Besitzer(Id))";
             stmt.executeUpdate(sql);
 
             // Initial Besitzer table values
-            sql = "INSERT INTO BESITZER (ID, NAME) " +
-                    "VALUES (1, 'Sebastian');";
+            sql = "INSERT INTO Besitzer (Id, Name) " +
+                    "VALUES (1, 'General Grievous');";
             stmt.executeUpdate(sql);
-            sql = "INSERT INTO BESITZER (ID, NAME) " +
-                    "VALUES (2, 'Mark');";
+            sql = "INSERT INTO Besitzer (Id, Name) " +
+                    "VALUES (2, 'Listarte');";
             stmt.executeUpdate(sql);
-            sql = "INSERT INTO BESITZER (ID, NAME) " +
+            sql = "INSERT INTO Besitzer (Id, Name) " +
                     "VALUES (3, 'Angela');";
             stmt.executeUpdate(sql);
-            sql = "INSERT INTO BESITZER (ID, NAME) " +
+            sql = "INSERT INTO Besitzer (Id, Name) " +
                     "VALUES (4, 'Greta');";
             stmt.executeUpdate(sql);
 
             // Initial Fahrzeug table values
-            sql = "INSERT INTO FAHRZEUG (ID, NAME, BesitzerID) " +
-                    "VALUES (1, 'Ferrari', 1);";
+            sql = "INSERT INTO Fahrzeug (Id, Name, BesitzerId) " +
+                    "VALUES (1, 'Wheel Bike', 1);";
             stmt.executeUpdate(sql);
-            sql = "INSERT INTO BESITZER (ID, NAME, BesitzerID) " +
-                    "VALUES (2, 'Mercedes', 2);";
+            sql = "INSERT INTO Fahrzeug (Id, Name, BesitzerId) " +
+                    "VALUES (2, 'Lista Wings', 2);";
             stmt.executeUpdate(sql);
-            sql = "INSERT INTO BESITZER (ID, NAME, BesitzerID) " +
-                    "VALUES (3, 'Tiger', 3);";
+            sql = "INSERT INTO Fahrzeug (Id, Name, BesitzerId) " +
+                    "VALUES (3, 'Tigerpanzer', 3);";
             stmt.executeUpdate(sql);
-            sql = "INSERT INTO BESITZER (ID, NAME, BesitzerID) " +
-                    "VALUES (4, 'Tesla', 4);";
+            sql = "INSERT INTO Fahrzeug (Id, Name, BesitzerId) " +
+                    "VALUES (4, 'Cybertruck', 4);";
             stmt.executeUpdate(sql);
 
             stmt.close();
