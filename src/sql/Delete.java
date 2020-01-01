@@ -1,9 +1,7 @@
 package sql;
 
 public class Delete {
-    public static void main(String args[]) {
-        ConnectionWrapper cw = new ConnectionWrapper.GetInstance();
-    }
+    ConnectionWrapper cw = ConnectionWrapper.GetInstance();
     public void deleteBesitzer (int id){
         String sql = "DELETE FROM Besitzer WHERE ID=" + id;
         cw.ExecuteQuery(sql);

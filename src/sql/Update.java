@@ -3,21 +3,25 @@ package sql;
 import java.sql.*;
 
 public class Update {
-    public static void main(String args[]) {
-        ConnectionWrapper cw = ConnectionWrapper.GetInstance();
-    }
-    public void insertBesitzer (int id){
-        String sql = "DELETE FROM Besitzer WHERE ID=" + id;
+    ConnectionWrapper cw = ConnectionWrapper.GetInstance();
+    public void addBesitzer (String name){
+        String sql = "INSERT INTO Besitzer Name " +
+                    "VALUES ('" + name + "');";
         cw.ExecuteQuery(sql);
     }
-    public void insertFahrzeug (String fahrzeug, int besitzerId){
-        String sql = "INSERT INTO Fahrzeug (Name, BesitzerId) " +
-                "VALUES ('" + fahrzeug + "', " + besitzerId + ");";
+    public void addFahrzeug (int besitzerId, String typ){
+        String sql = "INSERT INTO Fahrzeug Typ, BesitzerId " +
+                    "VALUES ('" + typ + "," + besitzerId + "');";
         cw.ExecuteQuery(sql);
     }
-    public void updateFahrzeug(int besitzerId, int fahrzeugId) {
-        String sql = "UPDATE FAHRZEUG SET BesitzerID=" + besitzerId +
-                " WHERE FAHRZEUG.Id=" + fahrzeugId;
+    public void renameBesitzer (int besitzerId, String name){
+        String sql = "UPDATE Besitzer SET Name=" + name +
+                    " WHERE Id='" + besitzerId + "';";
+        cw.ExecuteQuery(sql);
+    }
+    public void changeType(int fahrzeugId, String typ) {
+        String sql = "UPDATE Fahrzeug SET Typ=" + typ +
+                    " WHERE FAHRZEUG.Id=" + fahrzeugId;
         cw.ExecuteQuery(sql);
     }
 }
