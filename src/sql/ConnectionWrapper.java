@@ -16,11 +16,12 @@ public class ConnectionWrapper {
         return _instance;
     }
 
-    public void ExecuteQuery(String sql){
+    public ResultSet ExecuteQuery(String sql){
         try{
             Statement statement = connection.createStatement();
-            statement.execute(sql);
+            ResultSet result = statement.execute(sql);
             statement.close();
+            return result;
         }catch(Exception e){
             System.out.println(sql + " konnte nicht ausgeführt werden.");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
