@@ -5,24 +5,26 @@ import models.BesitzerMeta;
 import models.Fahrzeug;
 import models.FahrzeugMeta;
 
+import java.util.stream.Stream;
+
 public interface IFachkonzept {
-    BesitzerMeta[] getAllBesitzer();
+    Stream<BesitzerMeta> getAllBesitzer();
 
     Besitzer getBesitzerDetails(int besitzerId);
 
     Besitzer getBeistzerByFahrzeug(int fahrzeugId);
 
-    boolean saveBesitzer(Besitzer besitzer);
+    int saveBesitzer(Besitzer besitzer);
 
     boolean deleteBesitzer(int besitzerId);
 
-    FahrzeugMeta[] getAllFahrzeuge();
+    Stream<FahrzeugMeta> getAllFahrzeuge();
 
     Fahrzeug getFahrzeugDetails(int fahrzeugId);
 
-    FahrzeugMeta[] getFahrzeugeByBesitzer(int besitzerId);
+    Stream<FahrzeugMeta> getFahrzeugeByBesitzer(int besitzerId);
 
-    boolean saveFahrzeug(Fahrzeug fahrzeug);
+    int saveFahrzeug(Fahrzeug fahrzeug);
 
     boolean deleteFahrzeug(int fahrzeugId);
 

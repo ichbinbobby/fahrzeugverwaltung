@@ -1,6 +1,20 @@
 package models;
 
 public class BesitzerMeta {
+
+    public BesitzerMeta(String name) {
+        this(-1, name);
+    }
+
+    public BesitzerMeta(int id, String name) {
+        setBesitzerId(id);
+        setName(name);
+    }
+
+    public BesitzerMeta(BesitzerMeta other) {
+        this(other.getBesitzerId(), other.getName());
+    }
+
     private int _besitzerId;
     private String _name;
 
@@ -8,15 +22,17 @@ public class BesitzerMeta {
         return _besitzerId;
     }
 
-    public void setBesitzerId(int besitzerId) {
+    public BesitzerMeta setBesitzerId(int besitzerId) {
         this._besitzerId = besitzerId;
+        return this;
     }
 
     public String getName() {
         return _name;
     }
 
-    public void setName(String name) {
+    public BesitzerMeta setName(String name) {
         this._name = name;
+        return this;
     }
 }
