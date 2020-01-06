@@ -4,11 +4,11 @@ import models.Besitzer;
 import models.Fahrzeug;
 
 public interface IDatenhaltung {
-    Besitzer[] getAllBeistzer();
+    Besitzer[] getAllBesitzer();
 
     Fahrzeug[] getAllFahzeuge();
 
-    Besitzer getBeistzer(int beistzerId);
+    Besitzer getBesitzer(int besitzerId);
 
     Fahrzeug getFahrzeug(int fahrzeugId);
 

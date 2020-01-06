@@ -13,7 +13,6 @@ public class ConnectionWrapper {
         if(_instance == null){
             _instance = new ConnectionWrapper();
         }
-
         return _instance;
     }
 
@@ -23,6 +22,7 @@ public class ConnectionWrapper {
             statement.execute(sql);
             statement.close();
         }catch(Exception e){
+            System.out.println(sql + " konnte nicht ausgeführt werden.");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
             System.exit(0);
         }
