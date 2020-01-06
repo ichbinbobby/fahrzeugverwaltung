@@ -19,9 +19,22 @@ public class ConnectionWrapper {
     public ResultSet ExecuteQuery(String sql){
         try{
             Statement statement = connection.createStatement();
-            ResultSet result = statement.execute(sql);
+            ResultSet result = statement.executeQuery(sql);
             statement.close();
             return result;
+        }catch(Exception e){
+            System.out.println(sql + " konnte nicht ausgeführt werden.");
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+            System.exit(0);
+        }
+    }
+
+    public int ExecuteUpdate(String sql){
+        try{
+            Statement statement = connection.createStatement();
+            int rows = statement.executeUpdate(sql);
+            statement.close();
+            return rows;
         }catch(Exception e){
             System.out.println(sql + " konnte nicht ausgeführt werden.");
             System.err.println(e.getClass().getName() + ": " + e.getMessage());
@@ -44,8 +57,15 @@ public class ConnectionWrapper {
     }
 
     @Override
-    protected void finalize() throws Throwable {
-        super.finalize();
-        connection.close();
+    protected void finalize() {
+        try {
+            // finalize is deprecated
+            super.finalize();
+            connection.close();
+        } catch (Exception e) {
+            System.err.println(e.getClass().getName() + ": " + e.getMessage());
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
     }
 }

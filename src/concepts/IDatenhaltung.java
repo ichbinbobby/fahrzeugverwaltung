@@ -18,7 +18,7 @@ public interface IDatenhaltung {
 
     boolean saveFahrzeug(Fahrzeug fahrzeug);
 
-    boolean deleteFahrzeug(int fahrzeugId);
-
     boolean deleteBesitzer(int besitzerId);
+
+    boolean deleteFahrzeug(int fahrzeugId);
 }
