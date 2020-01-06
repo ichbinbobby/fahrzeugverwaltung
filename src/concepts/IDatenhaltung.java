@@ -3,10 +3,12 @@ package concepts;
 import models.Besitzer;
 import models.Fahrzeug;
 
-public interface IDatenhaltung {
-    Besitzer[] getAllBeistzer();
+import java.util.stream.Stream;
 
-    Fahrzeug[] getAllFahzeuge();
+public interface IDatenhaltung {
+    Stream<Besitzer> getAllBeistzer();
+
+    Stream<Fahrzeug> getAllFahzeuge();
 
     Besitzer getBeistzer(int beistzerId);
 
