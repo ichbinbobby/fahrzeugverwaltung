@@ -18,11 +18,11 @@ public class Fahrzeugverwaltung {
         System.out.println();
 
         System.out.println("Besitzer by Fahrzeug 1");
-        System.out.println(fachkonzept.getBeistzerByFahrzeug(1));
+        System.out.println(fachkonzept.getBesitzerByFahrzeug(1));
         System.out.println();
 
         System.out.println("Besitzer by Fahrzeug 15");
-        System.out.println(fachkonzept.getBeistzerByFahrzeug(15));
+        System.out.println(fachkonzept.getBesitzerByFahrzeug(15));
         System.out.println();
 
         System.out.println("Fahrzeuge by Besitzer 1");

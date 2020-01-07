@@ -10,6 +10,10 @@ public class Besitzer extends BesitzerMeta {
         super(id, name);
     }
 
+    public Besitzer(String name) {
+        this(-1, name);
+    }
+
     @Override
     public Besitzer setBesitzerId(int besitzerId) {
         return (Besitzer) super.setBesitzerId(besitzerId);
