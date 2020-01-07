@@ -4,7 +4,7 @@ import concepts.IFachkonzept;
 
 abstract public class AbstractMenu {
     protected IFachkonzept fachkonzept;
-    public void showMenuInfo() {};
-    public void showReachableMenus() {};
-    public boolean getUserChoice() {return true;};
+    abstract public void showMenuInfo();
+    abstract public void showReachableMenus();
+    abstract public boolean getUserChoice();
 }

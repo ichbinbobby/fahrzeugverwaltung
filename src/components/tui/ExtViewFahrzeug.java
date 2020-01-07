@@ -7,13 +7,15 @@ import utils.Console;
 import java.util.Scanner;
 
 public class ExtViewFahrzeug extends AbstractMenu {
+    private int fahrzeugId;
 
     ExtViewFahrzeug(IFachkonzept fachkonzept, int fahrzeugId){
         this.fachkonzept = fachkonzept;
+        this.fahrzeugId = fahrzeugId;
         boolean run = true;
         while (run){
             showMenuInfo();
-            showReachableMenus(fahrzeugId);
+            showReachableMenus();
             run = getUserChoice();
         }
     }
@@ -24,7 +26,9 @@ public class ExtViewFahrzeug extends AbstractMenu {
         System.out.println("Fahrzeug Informationen");
     }
 
-    public void showReachableMenus(int fahrzeugId) {
+    @Override
+    public void showReachableMenus() {
+        int fahrzeugId = this.fahrzeugId;
         String bezeichnung = this.fachkonzept.getFahrzeugDetails(fahrzeugId).getBezeichnung();
         Besitzer besitzer = this.fachkonzept.getBeistzerByFahrzeug(fahrzeugId);
         String separatorLine = "-".repeat(22);

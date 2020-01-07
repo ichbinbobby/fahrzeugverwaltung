@@ -6,13 +6,15 @@ import utils.Console;
 import java.util.Scanner;
 
 public class ExtViewBesitzer extends AbstractMenu {
+    private int besitzerId;
 
     ExtViewBesitzer(IFachkonzept fachkonzept, int besitzerId){
         this.fachkonzept = fachkonzept;
+        this.besitzerId = besitzerId;
         boolean run = true;
         while (run){
             showMenuInfo();
-            showReachableMenus(besitzerId);
+            showReachableMenus();
             run = getUserChoice();
         }
     }
@@ -23,7 +25,8 @@ public class ExtViewBesitzer extends AbstractMenu {
         System.out.println("Besitzer Informationen");
     }
 
-    public void showReachableMenus(int besitzerId) {
+    @Override
+    public void showReachableMenus() {
         String separatorLine = "-".repeat(22);
         String name = this.fachkonzept.getBesitzerDetails(besitzerId).getName();
 
