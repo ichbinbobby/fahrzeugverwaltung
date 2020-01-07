@@ -28,7 +28,7 @@ public class Fachkonzept1 implements IFachkonzept {
     }
 
     @Override
-    public Besitzer getBeistzerByFahrzeug(int fahrzeugId) {
+    public Besitzer getBesitzerByFahrzeug(int fahrzeugId) {
         return this.datenhaltung.getBesitzerByFahrzeug(fahrzeugId);
     }
 

@@ -67,7 +67,7 @@ public class EditBesitzverhaeltnis extends MainMenu {
         System.out.println(separatorLine);
         this.fachkonzept.getAllFahrzeuge().forEach(currFahrzeug -> {
             int fahrzeugId = currFahrzeug.getFahrzeugId();
-            System.out.println(fahrzeugId + ":  " + currFahrzeug.getBezeichnung() + " (" + this.fachkonzept.getBeistzerByFahrzeug(fahrzeugId).getName() + ")");
+            System.out.println(fahrzeugId + ":  " + currFahrzeug.getBezeichnung() + " (" + this.fachkonzept.getBesitzerByFahrzeug(fahrzeugId).getName() + ")");
         });
         Scanner input = new Scanner(System.in);
         int choice = -1;
