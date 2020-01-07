@@ -6,18 +6,12 @@ import utils.Console;
 
 import java.util.Scanner;
 
-public class ExtViewFahrzeug extends AbstractMenu {
+public class ExtViewFahrzeug extends MainMenu {
     private int fahrzeugId;
 
     ExtViewFahrzeug(IFachkonzept fachkonzept, int fahrzeugId){
-        this.fachkonzept = fachkonzept;
+        super(fachkonzept);
         this.fahrzeugId = fahrzeugId;
-        boolean run = true;
-        while (run){
-            showMenuInfo();
-            showReachableMenus();
-            run = getUserChoice();
-        }
     }
 
     @Override

@@ -6,16 +6,10 @@ import utils.Console;
 
 import java.util.Scanner;
 
-public class AddBesitzer extends AbstractMenu {
+public class AddBesitzer extends MainMenu {
 
     AddBesitzer(IFachkonzept fachkonzept){
-        this.fachkonzept = fachkonzept;
-        boolean run = true;
-        while (run){
-            showMenuInfo();
-            showReachableMenus();
-            run = getUserChoice();
-        }
+        super(fachkonzept);
     }
 
 
@@ -43,11 +37,11 @@ public class AddBesitzer extends AbstractMenu {
             int result = this.fachkonzept.saveBesitzer(new Besitzer(-1, name));
             if (result >= 0){
                 System.out.println("Neuer Besitzer '" + name + "' unter der ID '" + result + "' erstellt.");
-                System.out.println("Drücke ENTER um zum Hauptmenu zurück zu kommen.");
-                input.nextLine();
+                Console.pressEnterToContinue();
                 return false;
             } else {
-                System.out.println("Es ist ein Fehler aufgetreten. ");
+                System.out.println("Es ist ein Fehler aufgetreten." + result);
+                Console.pressEnterToContinue();
                 return true;
             }
         }

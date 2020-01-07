@@ -1,24 +1,15 @@
 package components.tui;
 
 import concepts.IFachkonzept;
-import models.BesitzerMeta;
-import models.FahrzeugMeta;
 import utils.Console;
 
 import java.util.Scanner;
-import java.util.stream.Stream;
 
-public class DeleteBesitzverhaeltnis extends AbstractMenu {
+public class DeleteBesitzverhaeltnis extends MainMenu {
     private int tmpBesitzerId;
 
     DeleteBesitzverhaeltnis(IFachkonzept fachkonzept){
-        this.fachkonzept = fachkonzept;
-        boolean run = true;
-        while (run) {
-            showMenuInfo();
-            showReachableMenus();
-            run = getUserChoice();
-        }
+        super(fachkonzept);
     }
 
     @Override
@@ -77,17 +68,17 @@ public class DeleteBesitzverhaeltnis extends AbstractMenu {
 //        }
         choice = input.nextInt();
 
-        if (choice != 0){
+        if (choice >= 0){
             if (this.fachkonzept.setNewBesitzer(choice, -1)) {
-                System.out.print("Löschen erfolgreich.\nDrücke ENTER zum fortfahren.");
-                input.next();
+                System.out.println("Löschen erfolgreich.");
+                Console.pressEnterToContinue();
                 return false;
             } else {
-                System.out.print("Es gab einen Fehler.\nTaste drücken zum fortfahren.");
-                input.next();
+                System.out.println("Es gab einen Fehler.");
+                Console.pressEnterToContinue();
                 return true;
             }
-        } else return choice != 0;
+        } else return true;
     }
 }
 

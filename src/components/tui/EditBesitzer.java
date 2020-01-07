@@ -6,16 +6,10 @@ import utils.Console;
 
 import java.util.Scanner;
 
-public class EditBesitzer extends AbstractMenu {
+public class EditBesitzer extends MainMenu {
 
     EditBesitzer(IFachkonzept fachkonzept){
-        this.fachkonzept = fachkonzept;
-        boolean run = true;
-        while (run){
-            showMenuInfo();
-            showReachableMenus();
-            run = getUserChoice();
-        }
+        super(fachkonzept);
     }
 
     @Override
@@ -47,18 +41,20 @@ public class EditBesitzer extends AbstractMenu {
 
         if (choice != 0){
             Besitzer besitzer = this.fachkonzept.getBesitzerDetails(choice);
-            System.out.print("Neuer Name des Besitzers "+ besitzer.getName() +":\n(Leer/0 = Zurück)\n> ");
+            System.out.print("Neuer Name des Besitzers "+ besitzer.getName() +":\n(Leer/0 = Abbrechen)\n> ");
             String name = input.next().trim();
 
             if (name.isBlank() || name.equals("0")) {
-                return false;
+                return true;
             } else {
                 besitzer.setName(name);
-                if (this.fachkonzept.saveBesitzer(besitzer) >= 0){
-                    System.out.println("Saved");
+                if (this.fachkonzept.saveBesitzer(besitzer) > 0){
+                    System.out.println("Besitzer wurde unter dem Namen '" + name + "' gespeichert.");
+                    Console.pressEnterToContinue();
                     return false;
                 } else {
                     System.out.println("Es ist ein Fehler aufgetreten.");
+                    Console.pressEnterToContinue();
                     return false;
                 }
             }

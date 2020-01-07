@@ -1,26 +1,16 @@
 package components.tui;
 
 import concepts.IFachkonzept;
-import models.Besitzer;
-import models.BesitzerMeta;
 import models.FahrzeugMeta;
 import utils.Console;
 
 import java.util.Scanner;
 import java.util.stream.Stream;
 
-public class ViewBesitzverhaeltnis extends AbstractMenu {
-    Stream<BesitzerMeta> besitzer;
+public class ViewBesitzverhaeltnis extends MainMenu {
 
     ViewBesitzverhaeltnis(IFachkonzept fachkonzept){
-        this.fachkonzept = fachkonzept;
-        boolean run = true;
-
-        while (run){
-            showMenuInfo();
-            showReachableMenus();
-            run = getUserChoice();
-        }
+        super(fachkonzept);
     }
 
     @Override
@@ -33,8 +23,7 @@ public class ViewBesitzverhaeltnis extends AbstractMenu {
     public void showReachableMenus() {
         String separatorLine = "-".repeat(21);
         System.out.println(separatorLine);
-        Stream<BesitzerMeta> besitzer = this.fachkonzept.getAllBesitzer();
-        besitzer.forEach(currbesitzer -> {
+        this.fachkonzept.getAllBesitzer().forEach(currbesitzer -> {
             System.out.println("Name: " + currbesitzer.getName());
             System.out.println("Fahrzeug/e: ");
             Stream<FahrzeugMeta> fahrzeuge = this.fachkonzept.getFahrzeugeByBesitzer(currbesitzer.getBesitzerId());
@@ -55,6 +44,7 @@ public class ViewBesitzverhaeltnis extends AbstractMenu {
 
         System.out.println("(Leer/0 = Zurück)");
         while (true){
+            System.out.print("> ");
             String choice = input.nextLine().trim();
             if (choice.isBlank() || choice.equals("0")) {
                 return false;

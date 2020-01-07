@@ -4,19 +4,12 @@ import concepts.IFachkonzept;
 import models.Fahrzeug;
 import utils.Console;
 
-import java.awt.*;
 import java.util.Scanner;
 
-public class EditFahrzeug extends AbstractMenu {
+public class EditFahrzeug extends MainMenu {
 
     EditFahrzeug(IFachkonzept fachkonzept){
-        this.fachkonzept = fachkonzept;
-        boolean run = true;
-        while (run){
-            showMenuInfo();
-            showReachableMenus();
-            run = getUserChoice();
-        }
+        super(fachkonzept);
     }
 
     @Override
@@ -56,10 +49,12 @@ public class EditFahrzeug extends AbstractMenu {
             } else {
                 fahrzeug.setBezeichnung(bezeichnung);
                 if (this.fachkonzept.saveFahrzeug(fahrzeug) >= 0){
-                    System.out.println("Saved");
+                    System.out.println("Neue Bezeichnung '" + bezeichnung + "' wurde gespeichert.");
+                    Console.pressEnterToContinue();
                     return false;
                 } else {
                     System.out.println("Es ist ein Fehler aufgetreten.");
+                    Console.pressEnterToContinue();
                     return false;
                 }
             }

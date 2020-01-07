@@ -5,18 +5,12 @@ import utils.Console;
 
 import java.util.Scanner;
 
-public class ExtViewBesitzer extends AbstractMenu {
+public class ExtViewBesitzer extends MainMenu {
     private int besitzerId;
 
     ExtViewBesitzer(IFachkonzept fachkonzept, int besitzerId){
-        this.fachkonzept = fachkonzept;
+        super(fachkonzept);
         this.besitzerId = besitzerId;
-        boolean run = true;
-        while (run){
-            showMenuInfo();
-            showReachableMenus();
-            run = getUserChoice();
-        }
     }
 
     @Override

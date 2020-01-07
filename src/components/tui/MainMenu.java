@@ -6,12 +6,14 @@ import utils.Console;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Menu extends AbstractMenu{
-    private IFachkonzept fachkonzept;
-    ArrayList<String> menus = new ArrayList<String>();
+public class MainMenu {
+    protected IFachkonzept fachkonzept;
 
-    Menu(IFachkonzept fachkonzept) {
+    MainMenu(IFachkonzept fachkonzept) {
         this.fachkonzept = fachkonzept;
+    }
+
+    public void showMenu(){
         boolean run = true;
         while (run) {
             showMenuInfo();
@@ -19,6 +21,7 @@ public class Menu extends AbstractMenu{
             run = getUserChoice();
         }
     }
+
     public void showMenuInfo() {
         Console.clear();
         System.out.println("Hauptmenu");
@@ -60,37 +63,37 @@ public class Menu extends AbstractMenu{
             case 0:
                 return false;
             case 1:
-                new ViewBesitzer(fachkonzept);
+                new ViewBesitzer(fachkonzept).showMenu();
                 break;
             case 2:
-                new AddBesitzer(fachkonzept);
+                new AddBesitzer(fachkonzept).showMenu();
                 break;
             case 3:
-                new EditBesitzer(fachkonzept);
+                new EditBesitzer(fachkonzept).showMenu();
                 break;
             case 4:
-                new DeleteBesitzer(fachkonzept);
+                new DeleteBesitzer(fachkonzept).showMenu();
                 break;
             case 5:
-                new ViewFahrzeug(fachkonzept);
+                new ViewFahrzeug(fachkonzept).showMenu();
                 break;
             case 6:
-                new AddFahrzeug(fachkonzept);
+                new AddFahrzeug(fachkonzept).showMenu();
                 break;
             case 7:
-                new EditFahrzeug(fachkonzept);
+                new EditFahrzeug(fachkonzept).showMenu();
                 break;
             case 8:
-                new DeleteFahrzeug(fachkonzept);
+                new DeleteFahrzeug(fachkonzept).showMenu();
                 break;
             case 9:
-                new ViewBesitzverhaeltnis(fachkonzept);
+                new ViewBesitzverhaeltnis(fachkonzept).showMenu();
                 break;
             case 10:
-                new EditBesitzverhaeltnis(fachkonzept);
+                new EditBesitzverhaeltnis(fachkonzept).showMenu();
                 break;
             case 11:
-                new DeleteBesitzverhaeltnis(fachkonzept);
+                new DeleteBesitzverhaeltnis(fachkonzept).showMenu();
                 break;
         }
         return true;

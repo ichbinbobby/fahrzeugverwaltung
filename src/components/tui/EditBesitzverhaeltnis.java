@@ -5,18 +5,12 @@ import utils.Console;
 
 import java.util.Scanner;
 
-public class EditBesitzverhaeltnis extends AbstractMenu {
+public class EditBesitzverhaeltnis extends MainMenu {
     private int tmpBesitzerId;
     private int tmpFahrzeugId;
 
     EditBesitzverhaeltnis(IFachkonzept fachkonzept){
-        this.fachkonzept = fachkonzept;
-        boolean run = true;
-        while(run){
-            showMenuInfo();
-            showReachableMenus();
-            run = getUserChoice();
-        }
+        super(fachkonzept);
     }
 
     @Override
@@ -52,6 +46,7 @@ public class EditBesitzverhaeltnis extends AbstractMenu {
         });
         Scanner input = new Scanner(System.in);
         int choice = -1;
+        System.out.println(separatorLine);
         System.out.println("Besitzer auswählen\n(0 = Abbrechen)");
         System.out.print("> ");
         choice = input.nextInt();
@@ -76,6 +71,7 @@ public class EditBesitzverhaeltnis extends AbstractMenu {
         });
         Scanner input = new Scanner(System.in);
         int choice = -1;
+        System.out.println(separatorLine);
         System.out.println("Fahrzeug auswählen\n(0 = Abbrechen)");
         System.out.print("> ");
         choice = input.nextInt();
@@ -86,6 +82,7 @@ public class EditBesitzverhaeltnis extends AbstractMenu {
         } else {
             showMenuInfo();
             System.out.println("Ein Fehler ist aufgetreten.");
+            Console.pressEnterToContinue();
             return true;
         }
     }
@@ -103,9 +100,12 @@ public class EditBesitzverhaeltnis extends AbstractMenu {
         String choice = input.next();
         if (choice.equals("j") || choice.equals("J") || choice.equals("ja") || choice.equals("Ja")){
             this.fachkonzept.setNewBesitzer(this.tmpFahrzeugId, this.tmpBesitzerId);
+            System.out.println("Wurde gespeichert.");
+            Console.pressEnterToContinue();
             return false;
-        } else if (choice.equals("n") || choice.equals("N") || choice.equals("nein") || choice.equals("Nein")){
+        } else if (choice.equals("n") || choice.equals("N") || choice.equals("nein") || choice.equals("Nein") || choice.isBlank()){
             System.out.println("Abgebrochen");
+            Console.pressEnterToContinue();
             return true;
         } else return true;
 

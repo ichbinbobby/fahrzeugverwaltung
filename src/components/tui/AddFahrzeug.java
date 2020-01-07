@@ -6,17 +6,10 @@ import utils.Console;
 
 import java.util.Scanner;
 
-public class AddFahrzeug extends AbstractMenu {
-    private IFachkonzept fachkonzept;
+public class AddFahrzeug extends MainMenu {
 
     AddFahrzeug(IFachkonzept fachkonzept){
-        this.fachkonzept = fachkonzept;
-        boolean run = true;
-        while (run){
-            showMenuInfo();
-            showReachableMenus();
-            run = getUserChoice();
-        }
+        super(fachkonzept);
     }
 
     @Override
@@ -43,11 +36,11 @@ public class AddFahrzeug extends AbstractMenu {
             int result = this.fachkonzept.saveFahrzeug(new Fahrzeug(-1, name));
             if (result > 0){
                 System.out.println("Neues Fahrzeug '" + name + "' unter der ID '" + result + "' erstellt.");
-                System.out.println("Drücke ENTER um zum Hauptmenu zurück zu kommen.");
-                input.nextLine();
+                Console.pressEnterToContinue();
                 return false;
             } else {
-                System.out.println("Es ist ein Fehler aufgetreten. ");
+                System.out.println("Es ist ein Fehler aufgetreten.");
+                Console.pressEnterToContinue();
                 return true;
             }
         }

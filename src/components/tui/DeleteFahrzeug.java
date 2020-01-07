@@ -5,16 +5,10 @@ import utils.Console;
 
 import java.util.Scanner;
 
-public class DeleteFahrzeug extends AbstractMenu {
+public class DeleteFahrzeug extends MainMenu {
 
     DeleteFahrzeug(IFachkonzept fachkonzept){
-        this.fachkonzept = fachkonzept;
-        boolean run = true;
-        while (run){
-            showMenuInfo();
-            showReachableMenus();
-            run = getUserChoice();
-        }
+        super(fachkonzept);
     }
 
     @Override
@@ -46,12 +40,12 @@ public class DeleteFahrzeug extends AbstractMenu {
 
         if (choice != 0){
             if (this.fachkonzept.deleteFahrzeug(choice)) {
-                System.out.print("Löschen erfolgreich.\nDrücke ENTER zum fortfahren.");
-                input.next();
+                System.out.println("Löschen erfolgreich.");
+                Console.pressEnterToContinue();
                 return false;
             } else {
-                System.out.print("Es gab einen Fehler.\nTaste drücken zum fortfahren.");
-                input.next();
+                System.out.println("Es gab einen Fehler.");
+                Console.pressEnterToContinue();
                 return true;
             }
         } else return choice != 0;
