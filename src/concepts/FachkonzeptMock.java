@@ -65,11 +65,8 @@ public class FachkonzeptMock implements IFachkonzept {
         if (besitzer.getBesitzerId() > maxBesitzerId) {
             maxBesitzerId = besitzer.getBesitzerId();
         }
-        Besitzer result = besitzerList.put(besitzer.getBesitzerId(), besitzer);
-        if (result == null) {
-            return -1;
-        }
-        return result.getBesitzerId();
+        besitzerList.put(besitzer.getBesitzerId(), besitzer);
+        return besitzer.getBesitzerId();
     }
 
     @Override
@@ -121,11 +118,8 @@ public class FachkonzeptMock implements IFachkonzept {
         if (fahrzeug.getFahrzeugId() > maxFahrzeugId) {
             maxFahrzeugId = fahrzeug.getFahrzeugId();
         }
-        Fahrzeug result = fahrzeugList.put(fahrzeug.getFahrzeugId(), fahrzeug);
-        if (result == null) {
-            return -1;
-        }
-        return result.getFahrzeugId();
+        fahrzeugList.put(fahrzeug.getFahrzeugId(), fahrzeug);
+        return fahrzeug.getFahrzeugId();
     }
 
     @Override
