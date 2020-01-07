@@ -4,8 +4,6 @@ import models.BesitzerMeta;
 import models.FahrzeugMeta;
 import org.jetbrains.annotations.NotNull;
 
-import sql.Delete;
-
 import javax.swing.*;
 import java.lang.reflect.Proxy;
 import java.util.function.Function;
@@ -51,8 +49,6 @@ public class GraphicalUserInterface {
         this.fahrzeugScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.fahrzeugScrollPane.setViewportView(fahrzeugList);
 
-        Delete d = new Delete();
-
         addBesitzerBtn.addActionListener(e -> {
             String besitzer = addBesitzerTextField.getText();
             System.out.println(besitzer);
@@ -71,7 +67,6 @@ public class GraphicalUserInterface {
             if(value != null){
                 System.out.println(value);
                 deleteElement(this.besitzerListModel, index);
-                d.deleteBesitzer(index);
             }
         });
         deleteFahrzeugBtn.addActionListener(e -> {
@@ -80,7 +75,6 @@ public class GraphicalUserInterface {
             if(value != null){
                 System.out.println(value);
                 deleteElement(this.fahrzeugListModel, index);
-                d.deleteFahrzeug(index);
             }
         });
         verbindenButton.addActionListener(e -> {
