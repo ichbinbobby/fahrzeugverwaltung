@@ -48,6 +48,7 @@ public class GraphicalUserInterface {
 
         this.fahrzeugScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.fahrzeugScrollPane.setViewportView(fahrzeugList);
+
         addBesitzerBtn.addActionListener(e -> {
             String besitzer = addBesitzerTextField.getText();
             System.out.println(besitzer);
