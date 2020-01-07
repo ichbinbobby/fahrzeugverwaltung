@@ -1,50 +1,35 @@
 package sql;
 
 import java.sql.*;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
 
-public class ConnectionWrapper {
+public class ConnectionWrapper implements AutoCloseable {
 
     private static ConnectionWrapper _instance;
-    public static ConnectionWrapper GetInstance(){
-        if(_instance == null){
+
+    public static ConnectionWrapper GetInstance() {
+        if (_instance == null) {
             _instance = new ConnectionWrapper();
         }
         return _instance;
     }
 
-    public ResultSet ExecuteQuery(String sql){
-        try{
-            Statement statement = connection.createStatement();
-            ResultSet result = statement.executeQuery(sql);
-            statement.close();
-            return result;
-        }catch(Exception e){
-            System.out.println(sql + " konnte nicht ausgeführt werden.");
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+    public ResultSet ExecuteQuery(String sql) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet result = statement.executeQuery(sql);
+        statement.close();
+        return result;
     }
 
-    public int ExecuteUpdate(String sql){
-        try{
-            Statement statement = connection.createStatement();
-            int rows = statement.executeUpdate(sql);
-            statement.close();
-            return rows;
-        }catch(Exception e){
-            System.out.println(sql + " konnte nicht ausgeführt werden.");
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-            System.exit(0);
-        }
+    public int ExecuteUpdate(String sql) throws SQLException {
+        Statement statement = connection.createStatement();
+        int rows = statement.executeUpdate(sql);
+        statement.close();
+        return rows;
     }
 
     private Connection connection;
 
-    private ConnectionWrapper(){
+    private ConnectionWrapper() {
         try {
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:fahrzeugverwaltung.db");
@@ -57,15 +42,9 @@ public class ConnectionWrapper {
     }
 
     @Override
-    protected void finalize() {
-        try {
-            // finalize is deprecated
-            super.finalize();
+    public void close() throws SQLException {
+        if (!connection.isClosed()) {
             connection.close();
-        } catch (Exception e) {
-            System.err.println(e.getClass().getName() + ": " + e.getMessage());
-        } catch (Throwable throwable) {
-            throwable.printStackTrace();
         }
     }
 }

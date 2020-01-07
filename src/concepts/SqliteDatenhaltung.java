@@ -1,32 +1,55 @@
 package concepts;
 
 import models.Besitzer;
-import models.BesitzerMeta;
 import models.Fahrzeug;
 import sql.ConnectionWrapper;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Spliterator;
+import java.util.Spliterators;
+import java.util.function.Consumer;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
-public class SqliteDatenhaltung implements IDatenhaltung{
+public class SqliteDatenhaltung implements IDatenhaltung {
     ConnectionWrapper cw = ConnectionWrapper.GetInstance();
     String sql;
 
+    @FunctionalInterface
+    private interface ResultSetMap<T> {
+        T apply(ResultSet resultSet) throws SQLException;
+    }
+
     @Override
     public Stream<Besitzer> getAllBesitzer() {
-        HashMap<Integer, Besitzer> besitzerList = new HashMap<>();
         sql = "SELECT * FROM Besitzer";
+        ResultSet rs = null;
         try {
-            ResultSet rs = cw.ExecuteQuery(sql);
-            while(rs.next()) {
-                besitzerList.put(rs.getInt("Id"), new Besitzer(rs.getInt("Id"), rs.getString("Name")));
-            }
-        } catch (SQLException e ) {
-            System.err.println(e);
+            rs = cw.ExecuteQuery(sql);
+        } catch (SQLException e) {
+            System.err.printf("Not able to get all Besitzer. Error: %s, StackTrace: %s\n", e.getMessage(), Arrays.toString(e.getStackTrace()));
         }
-        return besitzerList.values().stream();
+        return resultSetToStream(rs, (resultSet) -> new Besitzer(resultSet.getInt("Id"), resultSet.getString("Name")));
+    }
+
+    private <T> Stream<T> resultSetToStream(ResultSet resultSet, ResultSetMap<T> mapFunction) {
+        return StreamSupport.stream(new Spliterators.AbstractSpliterator<>(
+                Long.MAX_VALUE, Spliterator.ORDERED) {
+            @Override
+            public boolean tryAdvance(Consumer<? super T> action) {
+                try {
+                    if (!resultSet.next()) return false;
+                    action.accept(mapFunction.apply(resultSet));
+                } catch (SQLException ex) {
+                    System.err.printf("Could not get any more data. Error: %s, StackTrace: %s\n", ex.getMessage(), Arrays.toString(ex.getStackTrace()));
+                    return false;
+                }
+                return true;
+            }
+        }, false);
     }
 
     @Override
@@ -35,7 +58,7 @@ public class SqliteDatenhaltung implements IDatenhaltung{
         sql = "SELECT * FROM Fahrzeug";
         try {
             ResultSet rs = cw.ExecuteQuery(sql);
-            while(rs.next()) {
+            while (rs.next()) {
                 // BesitzerId mitgeben?
                 fahrzeugList.put(rs.getInt("Id"), new Fahrzeug(rs.getInt("Id"), rs.getString("Typ")));
             }
@@ -78,42 +101,43 @@ public class SqliteDatenhaltung implements IDatenhaltung{
     @Override
     public boolean saveBesitzer(Besitzer besitzer) {
         //id? oder autoincrement
-        sql = "INSERT INTO Besitzer Name VALUES ('" + besitzer.getName() + "');";
-        int rows = cw.ExecuteUpdate(sql);
-        if (rows > 0) {
-            return true;
-        }
+        //sql = "INSERT INTO Besitzer Name VALUES ('" + besitzer.getName() + "');";
+        //int rows = cw.ExecuteUpdate(sql);
+        //if (rows > 0) {
+        //    return true;
+        //}
+        //return false;
         return false;
     }
 
     @Override
     public boolean saveFahrzeug(Fahrzeug fahrzeug) {
-        sql = "INSERT INTO Fahrzeug Typ VALUES ('" + fahrzeug.getBezeichnung() + "');";
-        int rows = cw.ExecuteUpdate(sql);
-        if (rows > 0) {
-            return true;
-        }
+        //sql = "INSERT INTO Fahrzeug Typ VALUES ('" + fahrzeug.getBezeichnung() + "');";
+        //int rows = cw.ExecuteUpdate(sql);
+        //if (rows > 0) {
+        //    return true;
+        //}
         return false;
     }
 
     @Override
     public boolean deleteBesitzer(int besitzerId) {
-        sql = "DELETE FROM Besitzer WHERE ID=" + besitzerId;
-        cw.ExecuteUpdate(sql);
-        int rows = cw.ExecuteUpdate(sql);
-        if (rows > 0) {
-            return true;
-        }
+        //sql = "DELETE FROM Besitzer WHERE ID=" + besitzerId;
+        //cw.ExecuteUpdate(sql);
+        //int rows = cw.ExecuteUpdate(sql);
+        //if (rows > 0) {
+        //    return true;
+        //}
         return false;
     }
 
     @Override
     public boolean deleteFahrzeug(int fahrzeugId) {
-        sql = "DELETE FROM Fahrzeug WHERE ID=" + fahrzeugId;
-        int rows = cw.ExecuteUpdate(sql);
-        if (rows > 0) {
-            return true;
-        }
+        //sql = "DELETE FROM Fahrzeug WHERE ID=" + fahrzeugId;
+        //int rows = cw.ExecuteUpdate(sql);
+        //if (rows > 0) {
+        //    return true;
+        //}
         return false;
     }
 }
