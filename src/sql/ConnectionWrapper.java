@@ -13,24 +13,58 @@ public class ConnectionWrapper implements AutoCloseable {
         return _instance;
     }
 
-    public ResultSet ExecuteQuery(String sql) throws SQLException {
-        Statement statement = connection.createStatement();
-        ResultSet result = statement.executeQuery(sql);
-        statement.close();
+    public ResultSet ExecuteQuery(String sql, SqlParameter... parameters) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(sql);
+        for (SqlParameter parameter : parameters) {
+            parameter.addToStatement(statement);
+        }
+        ResultSet result = statement.executeQuery();
         return result;
     }
 
-    public int ExecuteUpdate(String sql) throws SQLException {
+    public void Execute(String sql) throws SQLException {
+        Statement statement = connection.createStatement();
+        statement.execute(sql);
+        statement.close();
+    }
+
+    public void Execute(String sql, SqlParameter... parameters) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(sql);
+        for (SqlParameter parameter : parameters) {
+            parameter.addToStatement(statement);
+        }
+        statement.execute();
+        statement.close();
+    }
+
+    public ResultSet ExecuteQuery(String sql) throws SQLException {
+        Statement statement = connection.createStatement();
+        ResultSet result = statement.executeQuery(sql);
+        return result;
+    }
+
+    public UpdateResult ExecuteUpdate(String sql, SqlParameter... parameters) throws SQLException {
+        PreparedStatement statement = connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+        for (SqlParameter parameter : parameters) {
+            parameter.addToStatement(statement);
+        }
+        int rows = statement.executeUpdate();
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        return new UpdateResult(rows, generatedKeys);
+    }
+
+    public UpdateResult ExecuteUpdate(String sql) throws SQLException {
         Statement statement = connection.createStatement();
         int rows = statement.executeUpdate(sql);
-        statement.close();
-        return rows;
+        ResultSet generatedKeys = statement.getGeneratedKeys();
+        return new UpdateResult(rows, generatedKeys);
     }
 
     private Connection connection;
 
     private ConnectionWrapper() {
         try {
+
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection("jdbc:sqlite:fahrzeugverwaltung.db");
             connection.setAutoCommit(true);

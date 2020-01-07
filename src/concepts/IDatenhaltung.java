@@ -2,6 +2,7 @@ package concepts;
 
 import models.Besitzer;
 import models.Fahrzeug;
+import models.FahrzeugMeta;
 
 import java.util.stream.Stream;
 
@@ -10,15 +11,21 @@ public interface IDatenhaltung {
 
     Stream<Fahrzeug> getAllFahzeuge();
 
-    Besitzer getBesitzer(int besitzerId);
+    Stream<FahrzeugMeta> getFahrzeugeByBesitzer(int besitzerId);
 
-    Fahrzeug getFahrzeug(int fahrzeugId);
+    Besitzer getBesitzerByFahrzeug(int fahrzeugId);
 
-    boolean saveBesitzer(Besitzer besitzer);
+    Besitzer getBesitzerDetails(int besitzerId);
 
-    boolean saveFahrzeug(Fahrzeug fahrzeug);
+    Fahrzeug getFahrzeugDetails(int fahrzeugId);
+
+    int saveBesitzer(Besitzer besitzer);
+
+    int saveFahrzeug(Fahrzeug fahrzeug);
 
     boolean deleteBesitzer(int besitzerId);
 
     boolean deleteFahrzeug(int fahrzeugId);
+
+    boolean setNewBesitzer(int fahrzeugId, int besitzerId);
 }
