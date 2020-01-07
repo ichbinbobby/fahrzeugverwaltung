@@ -1,11 +1,10 @@
 package components.tui;
 
-import concepts.FachkonzeptMock;
 import concepts.IFachkonzept;
 
 
 public class Tui {
-    Tui(IFachkonzept fachkonzept){
+    public Tui(IFachkonzept fachkonzept) {
         new MainMenu(fachkonzept).showMenu();
     }
 }

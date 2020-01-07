@@ -15,9 +15,9 @@ public interface IDatenhaltung {
 
     Besitzer getBesitzerByFahrzeug(int fahrzeugId);
 
-    Besitzer getBesitzer(int besitzerId);
+    Besitzer getBesitzerDetails(int besitzerId);
 
-    Fahrzeug getFahrzeug(int fahrzeugId);
+    Fahrzeug getFahrzeugDetails(int fahrzeugId);
 
     int saveBesitzer(Besitzer besitzer);
 

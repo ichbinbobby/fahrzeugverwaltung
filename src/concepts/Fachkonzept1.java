@@ -5,19 +5,20 @@ import models.BesitzerMeta;
 import models.Fahrzeug;
 import models.FahrzeugMeta;
 
+import java.util.Comparator;
 import java.util.stream.Stream;
 
 public class Fachkonzept1 implements IFachkonzept {
     private IDatenhaltung datenhaltung;
 
-    Fachkonzept1(IDatenhaltung datenhaltung){
+    public Fachkonzept1(IDatenhaltung datenhaltung) {
         this.datenhaltung = datenhaltung;
     }
 
     @Override
     public Stream<BesitzerMeta> getAllBesitzer() {
         return this.datenhaltung.getAllBesitzer()
-                .sorted((b1, b2) -> b1.getName().compareTo(b2.getName()))
+                .sorted(Comparator.comparing(BesitzerMeta::getName))
                 .map(BesitzerMeta::new);
     }
 

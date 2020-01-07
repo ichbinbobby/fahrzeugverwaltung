@@ -23,6 +23,16 @@ public class SqliteDatenhaltung implements IDatenhaltung {
     public SqliteDatenhaltung() {
         createBesitzerTable();
         createFahrzeugTable();
+        enableForeignKeys();
+    }
+
+    void enableForeignKeys() {
+        String sql = "PRAGMA foreign_keys=on";
+        try {
+            cw.Execute(sql);
+        } catch (SQLException e) {
+            System.err.printf("Unable to enable foreign keys in sqlite database. Error: %s", e.getMessage());
+        }
     }
 
     void insertNewBesitzer(String name) throws SQLException {
@@ -50,7 +60,7 @@ public class SqliteDatenhaltung implements IDatenhaltung {
     }
 
     private void createFahrzeugTable() {
-        String sql = "CREATE TABLE IF NOT EXISTS Fahrzeug (Id INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung TEXT NOT NULL, BesitzerId INT, FOREIGN KEY (BesitzerId) REFERENCES Besitzer(Id) ON DELETE SET NULL)";
+        String sql = "CREATE TABLE IF NOT EXISTS Fahrzeug (Id INTEGER PRIMARY KEY AUTOINCREMENT, Bezeichnung TEXT NOT NULL, BesitzerId INT NULL, FOREIGN KEY (BesitzerId) REFERENCES Besitzer(Id) ON DELETE SET NULL)";
         try {
             cw.Execute(sql);
         } catch (SQLException e) {
@@ -95,7 +105,6 @@ public class SqliteDatenhaltung implements IDatenhaltung {
             public boolean tryAdvance(Consumer<? super T> action) {
                 try {
                     if (!resultSet.next()) {
-                        resultSet.close();
                         return false;
                     }
                     action.accept(mapFunction.apply(resultSet));
@@ -139,7 +148,7 @@ public class SqliteDatenhaltung implements IDatenhaltung {
         String sql = "SELECT BesitzerId FROM Fahrzeug WHERE Id = ?";
         try (ResultSet rs = cw.ExecuteQuery(sql, new SqlParameter(1, fahrzeugId, SqlParameterType.INT))) {
             if (rs.next()) {
-                return getBesitzer(rs.getInt("BesitzerId"));
+                return getBesitzerDetails(rs.getInt("BesitzerId"));
             }
         } catch (SQLException ex) {
             System.err.printf("Unable to get Fahrzeuge by Besitzer. Error: %s, StackTrace: %s\n", ex.getMessage(), Arrays.toString(ex.getStackTrace()));
@@ -148,7 +157,7 @@ public class SqliteDatenhaltung implements IDatenhaltung {
     }
 
     @Override
-    public Besitzer getBesitzer(int besitzerId) {
+    public Besitzer getBesitzerDetails(int besitzerId) {
         String sql = "SELECT * FROM Besitzer WHERE Id = ?";
         try (ResultSet rs = cw.ExecuteQuery(sql, new SqlParameter(1, besitzerId, SqlParameterType.INT))) {
             return new Besitzer(rs.getInt("Id"), rs.getString("Name"));
@@ -159,7 +168,7 @@ public class SqliteDatenhaltung implements IDatenhaltung {
     }
 
     @Override
-    public Fahrzeug getFahrzeug(int fahrzeugId) {
+    public Fahrzeug getFahrzeugDetails(int fahrzeugId) {
         String sql = "SELECT * FROM Fahrzeug WHERE Id = ?";
         try {
             ResultSet rs = cw.ExecuteQuery(sql, new SqlParameter(1, fahrzeugId, SqlParameterType.INT));
