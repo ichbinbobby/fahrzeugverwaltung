@@ -60,7 +60,7 @@ public class ViewFahrzeug extends AbstractMenu {
     public boolean getUserChoice() {
         Scanner input = new Scanner(System.in);
         int choice = -1;
-        System.out.println("Mehr Informationen zu\nFahrzeug (0 = Zurück)");
+        System.out.print("Mehr Informationen zu\nFahrzeug (0 = Zurück)\n> ");
 //        while (!input.hasNextInt()){
 //            System.out.println("Keine gültige Eingabe");
 //            choice = input.nextInt();

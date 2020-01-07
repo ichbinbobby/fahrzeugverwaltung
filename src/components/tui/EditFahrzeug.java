@@ -22,7 +22,7 @@ public class EditFahrzeug extends AbstractMenu {
     @Override
     public void showMenuInfo() {
         Console.clear();
-        System.out.println("Fahrzeug bearbeiten\n");
+        System.out.println("Fahrzeug bearbeiten");
     }
 
     @Override
@@ -39,7 +39,7 @@ public class EditFahrzeug extends AbstractMenu {
     public boolean getUserChoice() {
         Scanner input = new Scanner(System.in);
         int choice = -1;
-        System.out.println("Fahrzeug auswählen\n(0 = Zurück)");
+        System.out.print("Fahrzeug auswählen\n(0 = Zurück)\n> ");
 //        while (!input.hasNextInt()){
 //            System.out.println("Keine gültige Eingabe");
 //            choice = input.nextInt();
@@ -48,15 +48,20 @@ public class EditFahrzeug extends AbstractMenu {
 
         if (choice != 0){
             Fahrzeug fahrzeug = this.fachkonzept.getFahrzeugDetails(choice);
-            System.out.println("Neue Bezeichnung des Fahrzeugs "+ fahrzeug.getBezeichnung() +":\n(Leer/0 = Zurück)\n");
-            String bezeichnung = input.nextLine().trim();
+            System.out.print("Neue Bezeichnung des Fahrzeugs "+ fahrzeug.getBezeichnung() +":\n(Leer/0 = Zurück)\n> ");
+            String bezeichnung = input.next().trim();
 
             if (bezeichnung.isBlank() || bezeichnung.equals("0")) {
                 return false;
             } else {
                 fahrzeug.setBezeichnung(bezeichnung);
-                this.fachkonzept.saveFahrzeug(fahrzeug);
-                return false;
+                if (this.fachkonzept.saveFahrzeug(fahrzeug) >= 0){
+                    System.out.println("Saved");
+                    return false;
+                } else {
+                    System.out.println("Es ist ein Fehler aufgetreten.");
+                    return false;
+                }
             }
         } else return choice != 0;
     }

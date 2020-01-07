@@ -27,7 +27,7 @@ public class ExtViewFahrzeug extends AbstractMenu {
     public void showReachableMenus(int fahrzeugId) {
         String bezeichnung = this.fachkonzept.getFahrzeugDetails(fahrzeugId).getBezeichnung();
         Besitzer besitzer = this.fachkonzept.getBeistzerByFahrzeug(fahrzeugId);
-        String separatorLine = "-".repeat(18);
+        String separatorLine = "-".repeat(22);
         String besitzerName = "Kein Besitzer";
         if (besitzer != null){
             besitzerName = besitzer.getName();
@@ -43,7 +43,7 @@ public class ExtViewFahrzeug extends AbstractMenu {
     public boolean getUserChoice() {
         Scanner input = new Scanner(System.in);
 
-        System.out.println("(Leer/0 = Zurück)");
+        System.out.print("(Leer/0 = Zurück)\n> ");
         while (true){
             String choice = input.nextLine().trim();
             if (choice.isBlank() || choice.equals("0")) {

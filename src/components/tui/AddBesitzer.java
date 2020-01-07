@@ -33,7 +33,7 @@ public class AddBesitzer extends AbstractMenu {
     @Override
     public boolean getUserChoice() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Name des neuen Besitzers:\n(Leer/0 = Zurück)");
+        System.out.print("Name des neuen Besitzers:\n(Leer/0 = Zurück)\n> ");
 
         String name = input.nextLine().trim();
 
@@ -42,11 +42,12 @@ public class AddBesitzer extends AbstractMenu {
         } else {
             int result = this.fachkonzept.saveBesitzer(new Besitzer(-1, name));
             if (result >= 0){
-                System.out.println("Neuer Besitzer" + name + "unter der ID " + result + "erstellt.");
-                input.next();
+                System.out.println("Neuer Besitzer '" + name + "' unter der ID '" + result + "' erstellt.");
+                System.out.println("Drücke ENTER um zum Hauptmenu zurück zu kommen.");
+                input.nextLine();
                 return false;
             } else {
-                System.out.println("Es ist ein Fehler aufgetreten. "+result);
+                System.out.println("Es ist ein Fehler aufgetreten. ");
                 return true;
             }
         }

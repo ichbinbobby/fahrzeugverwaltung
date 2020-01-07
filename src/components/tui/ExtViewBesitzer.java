@@ -24,7 +24,7 @@ public class ExtViewBesitzer extends AbstractMenu {
     }
 
     public void showReachableMenus(int besitzerId) {
-        String separatorLine = "-".repeat(21);
+        String separatorLine = "-".repeat(22);
         String name = this.fachkonzept.getBesitzerDetails(besitzerId).getName();
 
         System.out.println(separatorLine);

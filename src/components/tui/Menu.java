@@ -38,7 +38,7 @@ public class Menu extends AbstractMenu{
                 "Fahrzeug löschen               ( 8)\n" +
                 separatorLine +
                 "\nBesitzverhältnisse anzeigen    ( 9)\n" +
-                "Besitzverhältniss hinzufügen   (10)\n" +
+                "Besitzverhältnisse bearbeiten  (10)\n" +
                 "Besitzverhältniss löschen      (11)\n" +
                 separatorLine +
                 "\nProgramm beenden               ( 0)"
@@ -84,13 +84,13 @@ public class Menu extends AbstractMenu{
                 new DeleteFahrzeug(fachkonzept);
                 break;
             case 9:
-                new ViewBesitzverhaeltniss(fachkonzept);
+                new ViewBesitzverhaeltnis(fachkonzept);
                 break;
             case 10:
-                new AddBesitzverhaeltniss(fachkonzept);
+                new EditBesitzverhaeltnis(fachkonzept);
                 break;
             case 11:
-                new DeleteBesitzverhaeltniss(fachkonzept);
+                new DeleteBesitzverhaeltnis(fachkonzept);
                 break;
         }
         return true;

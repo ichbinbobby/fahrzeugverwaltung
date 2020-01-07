@@ -20,12 +20,12 @@ public class DeleteFahrzeug extends AbstractMenu {
     @Override
     public void showMenuInfo() {
         Console.clear();
-        System.out.println("Fahrzeug löschen\n");
+        System.out.println("Fahrzeug löschen");
     }
 
     @Override
     public void showReachableMenus() {
-        String separatorLine = "-".repeat(18);
+        String separatorLine = "-".repeat(16);
         System.out.println(separatorLine);
         this.fachkonzept.getAllFahrzeuge().forEach(currFahrzeug -> {
             System.out.println(currFahrzeug.getFahrzeugId() + ":  " + currFahrzeug.getBezeichnung());
@@ -37,7 +37,7 @@ public class DeleteFahrzeug extends AbstractMenu {
     public boolean getUserChoice() {
         Scanner input = new Scanner(System.in);
         int choice = -1;
-        System.out.println("Fahrzeug auswählen\n(0 = Zurück)");
+        System.out.print("Fahrzeug auswählen\n(0 = Zurück)\n> ");
 //        while (!input.hasNextInt()){
 //            System.out.println("Keine gültige Eingabe");
 //            choice = input.nextInt();
@@ -45,8 +45,15 @@ public class DeleteFahrzeug extends AbstractMenu {
         choice = input.nextInt();
 
         if (choice != 0){
-            this.fachkonzept.deleteFahrzeug(choice);
-            return false;
+            if (this.fachkonzept.deleteFahrzeug(choice)) {
+                System.out.print("Löschen erfolgreich.\nDrücke ENTER zum fortfahren.");
+                input.next();
+                return false;
+            } else {
+                System.out.print("Es gab einen Fehler.\nTaste drücken zum fortfahren.");
+                input.next();
+                return true;
+            }
         } else return choice != 0;
     }
 }

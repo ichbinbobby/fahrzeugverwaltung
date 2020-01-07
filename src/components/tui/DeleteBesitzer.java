@@ -21,7 +21,7 @@ public class DeleteBesitzer extends AbstractMenu {
     @Override
     public void showMenuInfo() {
         Console.clear();
-        System.out.println("Besitzer löschen\n");
+        System.out.println("Besitzer löschen");
     }
 
     @Override
@@ -39,6 +39,7 @@ public class DeleteBesitzer extends AbstractMenu {
         Scanner input = new Scanner(System.in);
         int choice = -1;
         System.out.println("Besitzer auswählen\n(0 = Zurück)");
+        System.out.print("> ");
 //        while (!input.hasNextInt()){
 //            System.out.println("Keine gültige Eingabe");
 //            choice = input.nextInt();
@@ -46,14 +47,13 @@ public class DeleteBesitzer extends AbstractMenu {
         choice = input.nextInt();
 
         if (choice != 0){
-            boolean isDeleted = this.fachkonzept.deleteBesitzer(choice);
-            if (isDeleted) {
-                System.out.println("Löschen erfolgreich.\nTaste drücken zum fortfahren.");
-                input.nextInt();
+            if (this.fachkonzept.deleteBesitzer(choice)) {
+                System.out.print("Löschen erfolgreich.\nDrücke ENTER zum fortfahren.");
+                input.next();
                 return false;
             } else {
                 System.out.println("Es gab einen Fehler.\nTaste drücken zum fortfahren.");
-                input.nextInt();
+                input.next();
                 return true;
             }
         } else return choice != 0;

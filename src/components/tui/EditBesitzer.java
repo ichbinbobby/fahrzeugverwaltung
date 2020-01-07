@@ -38,7 +38,7 @@ public class EditBesitzer extends AbstractMenu {
     public boolean getUserChoice() {
         Scanner input = new Scanner(System.in);
         int choice = -1;
-        System.out.println("Besitzer auswählen\n(0 = Zurück)");
+        System.out.print("Besitzer auswählen\n(0 = Zurück)\n> ");
 //        while (!input.hasNextInt()){
 //            System.out.println("Keine gültige Eingabe");
 //            choice = input.nextInt();
@@ -47,8 +47,8 @@ public class EditBesitzer extends AbstractMenu {
 
         if (choice != 0){
             Besitzer besitzer = this.fachkonzept.getBesitzerDetails(choice);
-            System.out.println("Neuer Name des Besitzers "+ besitzer.getName() +":\n(Leer/0 = Zurück)");
-            String name = input.nextLine().trim();
+            System.out.print("Neuer Name des Besitzers "+ besitzer.getName() +":\n(Leer/0 = Zurück)\n> ");
+            String name = input.next().trim();
 
             if (name.isBlank() || name.equals("0")) {
                 return false;
@@ -58,6 +58,7 @@ public class EditBesitzer extends AbstractMenu {
                     System.out.println("Saved");
                     return false;
                 } else {
+                    System.out.println("Es ist ein Fehler aufgetreten.");
                     return false;
                 }
             }
