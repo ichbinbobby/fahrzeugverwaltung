@@ -121,9 +121,11 @@ public class GraphicalUserInterface {
             if( besitzer == null || fahrzeug == null ) {
                 System.out.println("Es müssen beide ausgewählt werden.");
             } else if (this.fachkonzept.getFahrzeugeByBesitzer(besitzer.getBesitzerId()).anyMatch(fahrzeugMeta -> fahrzeugMeta.getFahrzeugId() == fahrzeug.getFahrzeugId())){
-
+                this.fachkonzept.setNewBesitzer(fahrzeug.getFahrzeugId(), -1);
+                this.verbindenButton.setText("Verbinden");
                 System.out.println("Lösche Verbindung von " + besitzer.getName() + " und Fahrzeug " + fahrzeug.getBezeichnung());
             } else if (this.fachkonzept.setNewBesitzer(fahrzeug.getFahrzeugId(), besitzer.getBesitzerId())){
+                this.verbindenButton.setText("Verbindung löschen");
                 System.out.println("Verbinde Besitzer " + besitzer.getBesitzerId() + " mit Fahrzeug " + fahrzeug.getFahrzeugId());
             }
             fahrzeugList.updateUI();
