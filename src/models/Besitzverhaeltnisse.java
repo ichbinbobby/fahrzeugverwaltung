@@ -3,15 +3,11 @@ package models;
 import java.util.Set;
 
 public class Besitzverhaeltnisse {
-    private int besitzerId;
-    private Set<Integer> fahrzeuge;
+    public Besitzverhaeltnisse(){}
 
-    public Besitzverhaeltnisse(){
-        besitzerId = 1;
-        fahrzeuge.add(1);
-        fahrzeuge.add(2);
-        fahrzeuge.add(3);
-    }
+    private int besitzerId;
+
+    private Set<Integer> fahrzeuge;
 
     public int getBesitzerId(){
         return this.besitzerId;

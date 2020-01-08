@@ -245,8 +245,13 @@ public class datenhaltung2 implements IDatenhaltung {
         }
         List<Besitzverhaeltnisse> besitzverhaeltnisse = json.getBesitzverhaeltnisse();
         Besitzverhaeltnisse tmpBesitzverhaeltnis  = besitzverhaeltnisse.stream()
-                .filter(besitzverhaeltnis -> besitzverhaeltnis.getFahrzeuge().contains(fahrzeugId))
-                .findFirst().orElse(null);
+                .filter(besitzverhaeltnis -> {
+                    if (besitzverhaeltnis.getFahrzeuge() != null) {
+                        return besitzverhaeltnis.getFahrzeuge().contains(fahrzeugId);
+                    } else return false;
+                })
+                .findFirst()
+                .orElse(null);
         if (tmpBesitzverhaeltnis != null) {
             int tmpBesitzerId = tmpBesitzverhaeltnis.getBesitzerId();
             return json.getBesitzer().stream()
@@ -258,17 +263,22 @@ public class datenhaltung2 implements IDatenhaltung {
     private JSON deleteFahrzeugIdFromBesitzverhaeltnisse(JSON json, int fahrzeugId){
         List<Besitzverhaeltnisse> tmpBesitzverhaeltnisse = json.getBesitzverhaeltnisse();
         Besitzverhaeltnisse toDelete = tmpBesitzverhaeltnisse.stream()
-                .filter(besitzverhaeltnisse -> besitzverhaeltnisse.getFahrzeuge().contains(fahrzeugId))
+                .filter(besitzverhaeltnisse -> {
+                    if (besitzverhaeltnisse.getFahrzeuge() != null) {
+                        return besitzverhaeltnisse.getFahrzeuge().contains(fahrzeugId);
+                    } else return false;})
                 .findFirst()
                 .orElse(null);
-        tmpBesitzverhaeltnisse = tmpBesitzverhaeltnisse.stream()
-                .filter(besitzverhaeltnisse -> besitzverhaeltnisse != toDelete)
-                .collect(Collectors.toList());
-        Set<Integer> tmpFahrzeuge = toDelete.getFahrzeuge();
-        tmpFahrzeuge.remove(fahrzeugId);
-        toDelete.setFahrzeuge(tmpFahrzeuge);
-        tmpBesitzverhaeltnisse.add(toDelete);
-        json.setBesitzverhaeltnisse(tmpBesitzverhaeltnisse);
-        return json;
-    }
+                        tmpBesitzverhaeltnisse = tmpBesitzverhaeltnisse.stream()
+                                .filter(besitzverhaeltnisse -> besitzverhaeltnisse != toDelete)
+                                .collect(Collectors.toList());
+                        if (toDelete != null) {
+                            Set<Integer> tmpFahrzeuge = toDelete.getFahrzeuge();
+                            tmpFahrzeuge.remove(fahrzeugId);
+                            toDelete.setFahrzeuge(tmpFahrzeuge);
+                            tmpBesitzverhaeltnisse.add(toDelete);
+                        }
+                        json.setBesitzverhaeltnisse(tmpBesitzverhaeltnisse);
+                        return json;
+                    }
 }

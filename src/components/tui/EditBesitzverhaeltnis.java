@@ -1,6 +1,7 @@
 package components.tui;
 
 import concepts.IFachkonzept;
+import models.Besitzer;
 import utils.Console;
 
 import java.util.Scanner;
@@ -67,7 +68,13 @@ public class EditBesitzverhaeltnis extends MainMenu {
         System.out.println(separatorLine);
         this.fachkonzept.getAllFahrzeuge().forEach(currFahrzeug -> {
             int fahrzeugId = currFahrzeug.getFahrzeugId();
-            System.out.println(fahrzeugId + ":  " + currFahrzeug.getBezeichnung() + " (" + this.fachkonzept.getBesitzerByFahrzeug(fahrzeugId).getName() + ")");
+            Besitzer b = this.fachkonzept.getBesitzerByFahrzeug(fahrzeugId);
+            System.out.print(fahrzeugId + ":  " + currFahrzeug.getBezeichnung() + " (");
+            if (b != null){
+                System.out.print(b.getName() + ")\n");
+            } else {
+                System.out.print(")\n");
+            }
         });
         Scanner input = new Scanner(System.in);
         int choice = -1;
