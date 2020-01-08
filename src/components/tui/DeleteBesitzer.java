@@ -29,15 +29,8 @@ public class DeleteBesitzer extends MainMenu {
 
     @Override
     public boolean getUserChoice() {
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
         System.out.println("Besitzer auswählen\n(0 = Zurück)");
-        System.out.print("> ");
-//        while (!input.hasNextInt()){
-//            System.out.println("Keine gültige Eingabe");
-//            choice = input.nextInt();
-//        }
-        choice = input.nextInt();
+        int choice = Console.inputInt();
 
         if (choice != 0){
             if (this.fachkonzept.deleteBesitzer(choice)) {

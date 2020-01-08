@@ -47,12 +47,9 @@ public class DeleteBesitzverhaeltnis extends MainMenu {
         this.fachkonzept.getAllBesitzer().forEach(currBesitzer -> {
             System.out.println(currBesitzer.getBesitzerId() + ":  " + currBesitzer.getName());
         });
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
         System.out.println(separatorLine);
         System.out.println("Besitzer auswählen\n(0 = Abbrechen)");
-        System.out.print("> ");
-        choice = input.nextInt();
+        int choice = Console.inputInt();
 
         if (choice > 0){
             this.tmpBesitzerId = choice;
@@ -73,14 +70,8 @@ public class DeleteBesitzverhaeltnis extends MainMenu {
         if (this.abbrechen) {
             return false;
         }
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
-        System.out.print("Fahrzeug auswählen\n(0 = Zurück)\n> ");
-//        while (!input.hasNextInt()){
-//            System.out.println("Keine gültige Eingabe");
-//            choice = input.nextInt();
-//        }
-        choice = input.nextInt();
+        System.out.println("Fahrzeug auswählen\n(0 = Zurück)");
+        int choice = Console.inputInt();
 
         if (choice > 0){
             if (this.fachkonzept.setNewBesitzer(choice, -1)) {

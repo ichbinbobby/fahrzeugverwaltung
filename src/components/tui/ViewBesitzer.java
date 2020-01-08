@@ -29,16 +29,8 @@ public class ViewBesitzer extends MainMenu {
 
     @Override
     public boolean getUserChoice() {
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
         System.out.println("Mehr Informationen zu\nBesitzer (0 = Zurück)");
-//        while (!input.hasNextInt()){
-//            System.out.println("Keine gültige Eingabe");
-//            choice = input.nextInt();
-//        }
-        System.out.print("> ");
-        choice = input.nextInt();
-
+        int choice = Console.inputInt();
         if (choice != 0){
             new ExtViewBesitzer(fachkonzept, choice).showMenu();
             return true;

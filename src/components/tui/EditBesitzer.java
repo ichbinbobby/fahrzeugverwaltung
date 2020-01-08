@@ -30,19 +30,14 @@ public class EditBesitzer extends MainMenu {
 
     @Override
     public boolean getUserChoice() {
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
-        System.out.print("Besitzer auswählen\n(0 = Zurück)\n> ");
-//        while (!input.hasNextInt()){
-//            System.out.println("Keine gültige Eingabe");
-//            choice = input.nextInt();
-//        }
-        choice = input.nextInt();
+        System.out.println("Besitzer auswählen\n(0 = Zurück)");
+        int choice = Console.inputInt();
+
 
         if (choice != 0){
             Besitzer besitzer = this.fachkonzept.getBesitzerDetails(choice);
-            System.out.print("Neuer Name des Besitzers "+ besitzer.getName() +":\n(0 = Abbrechen)\n> ");
-            String name = input.next().trim();
+            System.out.println("Neuer Name des Besitzers "+ besitzer.getName() +":\n(Leer/0 = Abbrechen)");
+            String name = Console.inputString();
 
             if (name.isBlank() || name.equals("0")) {
                 return true;

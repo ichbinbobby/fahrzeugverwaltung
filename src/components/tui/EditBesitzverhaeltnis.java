@@ -50,12 +50,9 @@ public class EditBesitzverhaeltnis extends MainMenu {
         this.fachkonzept.getAllBesitzer().forEach(currBesitzer -> {
             System.out.println(currBesitzer.getBesitzerId() + ":  " + currBesitzer.getName());
         });
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
         System.out.println(separatorLine);
         System.out.println("Besitzer auswählen\n(0 = Abbrechen)");
-        System.out.print("> ");
-        choice = input.nextInt();
+        int choice = Console.inputInt();
 
         if (choice > 0){
             this.tmpBesitzerId = choice;
@@ -85,12 +82,9 @@ public class EditBesitzverhaeltnis extends MainMenu {
                 System.out.print(")\n");
             }
         });
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
         System.out.println(separatorLine);
         System.out.println("Fahrzeug auswählen\n(0 = Zurück)");
-        System.out.print("> ");
-        choice = input.nextInt();
+        int choice = Console.inputInt();
 
         if (choice > 0){
             this.tmpFahrzeugId = choice;
@@ -115,7 +109,6 @@ public class EditBesitzverhaeltnis extends MainMenu {
         if (this.zurueck) {
             return true;
         }
-        Scanner input = new Scanner((System.in));
 
         System.out.println(
                 "Das Fahrzeug '" +
@@ -123,7 +116,7 @@ public class EditBesitzverhaeltnis extends MainMenu {
                 "' '" + this.fachkonzept.getBesitzerDetails(this.tmpBesitzerId).getName() +
                 "' zuordnen?\n(j/N)"
         );
-        String choice = input.next();
+        String choice = Console.inputString();
         if (choice.equals("j") || choice.equals("J") || choice.equals("ja") || choice.equals("Ja")){
             this.fachkonzept.setNewBesitzer(this.tmpFahrzeugId, this.tmpBesitzerId);
             System.out.println("Wurde gespeichert.");
