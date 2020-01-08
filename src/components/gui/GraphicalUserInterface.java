@@ -10,6 +10,8 @@ import org.jetbrains.annotations.NotNull;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.lang.reflect.Proxy;
 import java.util.function.Function;
 
@@ -42,6 +44,7 @@ public class GraphicalUserInterface {
             this.besitzerListModel.addElement(new BesitzerMeta(besitzerMeta.getBesitzerId(), besitzerMeta.getName()));
         });
         this.besitzerList = new JList<>(this.besitzerListModel);
+        this.besitzerList.setFont(new Font("Tahoma",Font.BOLD,14));
         SetValueCallback(BesitzerMeta.class, besitzerList, BesitzerMeta::getName);
         this.besitzerScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.besitzerScrollPane.setViewportView(besitzerList);
@@ -51,10 +54,37 @@ public class GraphicalUserInterface {
             this.fahrzeugListModel.addElement(new FahrzeugMeta(fahrzeugMeta.getFahrzeugId(), fahrzeugMeta.getBezeichnung()));
         });
         this.fahrzeugList = new JList<>(this.fahrzeugListModel);
+        this.fahrzeugList.setFont(new Font("Tahoma",Font.BOLD,14));
         SetValueCallback(FahrzeugMeta.class, fahrzeugList, FahrzeugMeta::getBezeichnung);
         this.fahrzeugScrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
         this.fahrzeugScrollPane.setViewportView(fahrzeugList);
 
+        besitzerList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2) {
+                    String name = JOptionPane.showInputDialog(mainPanel,
+                            "Bitte neuen Namen eingeben:", null);
+                    BesitzerMeta besitzer = besitzerList.getSelectedValue();
+                    if(besitzer.getBesitzerId() == fachkonzept.saveBesitzer(new Besitzer(besitzer.getBesitzerId(), name))){
+                        besitzer.setName(name);
+                    }
+                }
+            }
+        });
+        fahrzeugList.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                if(e.getClickCount() == 2) {
+                    String bezeichnung = JOptionPane.showInputDialog(mainPanel,
+                            "Bitte neue Bezeichnung eingeben:", null);
+                    FahrzeugMeta fahrzeug = fahrzeugList.getSelectedValue();
+                    if(fahrzeug.getFahrzeugId() == fachkonzept.saveFahrzeug(new Fahrzeug(fahrzeug.getFahrzeugId(), bezeichnung))){
+                        fahrzeug.setBezeichnung(bezeichnung);
+                    }
+                }
+            }
+        });
         besitzerList.addListSelectionListener(e -> {
             checkOwnership();
             fahrzeugList.updateUI();
@@ -142,7 +172,7 @@ public class GraphicalUserInterface {
         f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         f.pack();
         f.setTitle("Fahrzeugverwaltung");
-        f.setSize(400,600);
+        f.setSize(600,600);
         f.setVisible(true);
     }
 
