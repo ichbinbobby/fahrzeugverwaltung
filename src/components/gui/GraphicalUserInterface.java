@@ -64,7 +64,7 @@ public class GraphicalUserInterface {
             public void mouseClicked(MouseEvent e) {
                 if(e.getClickCount() == 2) {
                     String name = JOptionPane.showInputDialog(mainPanel,
-                            "Bitte neuen Namen eingeben:", null);
+                            "Bitte neuen Namen eingeben:", "Namensänderung", 3);
                     BesitzerMeta besitzer = besitzerList.getSelectedValue();
                     if(besitzer.getBesitzerId() == fachkonzept.saveBesitzer(new Besitzer(besitzer.getBesitzerId(), name))){
                         besitzer.setName(name);
@@ -77,7 +77,7 @@ public class GraphicalUserInterface {
             public void mouseClicked(MouseEvent e) {
                 if(e.getClickCount() == 2) {
                     String bezeichnung = JOptionPane.showInputDialog(mainPanel,
-                            "Bitte neue Bezeichnung eingeben:", null);
+                            "Bitte neue Bezeichnung eingeben:", "Bezeichnungsänderung", 3);
                     FahrzeugMeta fahrzeug = fahrzeugList.getSelectedValue();
                     if(fahrzeug.getFahrzeugId() == fachkonzept.saveFahrzeug(new Fahrzeug(fahrzeug.getFahrzeugId(), bezeichnung))){
                         fahrzeug.setBezeichnung(bezeichnung);
