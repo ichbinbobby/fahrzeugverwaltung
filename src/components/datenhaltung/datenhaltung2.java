@@ -9,6 +9,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -210,7 +211,38 @@ public class datenhaltung2 implements IDatenhaltung {
                 Set<Integer> tmpFahrzeuge = newBesitzverhaeltnis.getFahrzeuge();
                 tmpFahrzeuge.add(fahrzeugId);
                 newBesitzverhaeltnis.setFahrzeuge(tmpFahrzeuge);
+                List<Besitzverhaeltnisse> allOther = tmpBesitzverhaeltnisse.stream()
+                        .filter(besitzverhaeltnisse -> besitzverhaeltnisse.getBesitzerId() != besitzerId)
+                        .collect(Collectors.toList());
+                allOther.add(newBesitzverhaeltnis);
+                json.setBesitzverhaeltnisse(allOther);
+                try {
+                    writeJSON(json);
+                } catch (IOException e){
+                    return false;
+                }
+                return true;
+            } else {
+                Besitzverhaeltnisse addBesitzverhaeltnis = new Besitzverhaeltnisse();
+                addBesitzverhaeltnis.setBesitzerId(besitzerId);
+                Set<Integer> fahrzeuge = new HashSet<>();
+                fahrzeuge.add(fahrzeugId);
+                addBesitzverhaeltnis.setFahrzeuge(fahrzeuge);
+                tmpBesitzverhaeltnisse.add(addBesitzverhaeltnis);
+                try {
+                    writeJSON(json);
+                } catch (IOException e){
+                    return false;
+                }
+                return true;
             }
+        } else if (besitzerId == -1) {
+            try {
+                writeJSON(json);
+            } catch (IOException e){
+                return false;
+            }
+            return true;
         }
         return false;
     }
@@ -269,16 +301,16 @@ public class datenhaltung2 implements IDatenhaltung {
                     } else return false;})
                 .findFirst()
                 .orElse(null);
-                        tmpBesitzverhaeltnisse = tmpBesitzverhaeltnisse.stream()
-                                .filter(besitzverhaeltnisse -> besitzverhaeltnisse != toDelete)
-                                .collect(Collectors.toList());
-                        if (toDelete != null) {
-                            Set<Integer> tmpFahrzeuge = toDelete.getFahrzeuge();
-                            tmpFahrzeuge.remove(fahrzeugId);
-                            toDelete.setFahrzeuge(tmpFahrzeuge);
-                            tmpBesitzverhaeltnisse.add(toDelete);
-                        }
-                        json.setBesitzverhaeltnisse(tmpBesitzverhaeltnisse);
-                        return json;
-                    }
+        tmpBesitzverhaeltnisse = tmpBesitzverhaeltnisse.stream()
+                .filter(besitzverhaeltnisse -> besitzverhaeltnisse != toDelete)
+                .collect(Collectors.toList());
+        if (toDelete != null) {
+            Set<Integer> tmpFahrzeuge = toDelete.getFahrzeuge();
+            tmpFahrzeuge.remove(fahrzeugId);
+            toDelete.setFahrzeuge(tmpFahrzeuge);
+            tmpBesitzverhaeltnisse.add(toDelete);
+        }
+        json.setBesitzverhaeltnisse(tmpBesitzverhaeltnisse);
+        return json;
+        }
 }
