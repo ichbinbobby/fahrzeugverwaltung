@@ -15,11 +15,11 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.util.Set;
 
-public class datenhaltung2 implements IDatenhaltung {
+public class Datenhaltung2 implements IDatenhaltung {
     private Gson gson;
     private Path file = Paths.get("Fahrzeugverwaltung.json");
 
-    public datenhaltung2(){
+    public Datenhaltung2(){
         this.gson = new Gson();
         createFileIfNotExist();
     }
