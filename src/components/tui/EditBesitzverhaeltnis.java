@@ -4,11 +4,17 @@ import concepts.IFachkonzept;
 import models.Besitzer;
 import utils.Console;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class EditBesitzverhaeltnis extends MainMenu {
     private int tmpBesitzerId;
     private int tmpFahrzeugId;
+    private boolean abbrechen = false;
+    private boolean zurueck = false;
+    private List<Integer> besitzerIds = new ArrayList<Integer>();
+    private List<Integer> fahrzeugIds = new ArrayList<Integer>();
 
     EditBesitzverhaeltnis(IFachkonzept fachkonzept){
         super(fachkonzept);
@@ -28,6 +34,9 @@ public class EditBesitzverhaeltnis extends MainMenu {
         while (run){
             run = chooseBesitzer();
         }
+        if (this.abbrechen){
+            return;
+        }
         showMenuInfo();
         System.out.println(separatorLine);
         run = true;
@@ -40,51 +49,25 @@ public class EditBesitzverhaeltnis extends MainMenu {
 
     private boolean chooseBesitzer(){
         String separatorLine = "-".repeat(23);
-        System.out.println(" 1/2 Besitzer auswählen");
+        System.out.println("-1/2 Besitzer auswählen");
         System.out.println(separatorLine);
+        var ref = new Object() {
+            int counter = 1;
+        };
         this.fachkonzept.getAllBesitzer().forEach(currBesitzer -> {
-            System.out.println(currBesitzer.getBesitzerId() + ":  " + currBesitzer.getName());
+            System.out.println(ref.counter + ":  " + currBesitzer.getName());
+            this.besitzerIds.add(currBesitzer.getBesitzerId());
+            ref.counter = ref.counter + 1;
         });
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
         System.out.println(separatorLine);
         System.out.println("Besitzer auswählen\n(0 = Abbrechen)");
-        System.out.print("> ");
-        choice = input.nextInt();
+        int choice = Console.inputInt();
 
         if (choice > 0){
-            this.tmpBesitzerId = choice;
+            this.tmpBesitzerId = this.besitzerIds.get(choice - 1);
             return false;
-        } else {
-            showMenuInfo();
-            System.out.println("Ein Fehler ist aufgetreten.");
-            return true;
-        }
-    }
-
-    private boolean chooseFahrzeug(){
-        String separatorLine = "-".repeat(23);
-        System.out.println(" 2/2 Fahrzeug auswählen");
-        System.out.println(separatorLine);
-        this.fachkonzept.getAllFahrzeuge().forEach(currFahrzeug -> {
-            int fahrzeugId = currFahrzeug.getFahrzeugId();
-            Besitzer b = this.fachkonzept.getBesitzerByFahrzeug(fahrzeugId);
-            System.out.print(fahrzeugId + ":  " + currFahrzeug.getBezeichnung() + " (");
-            if (b != null){
-                System.out.print(b.getName() + ")\n");
-            } else {
-                System.out.print(")\n");
-            }
-        });
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
-        System.out.println(separatorLine);
-        System.out.println("Fahrzeug auswählen\n(0 = Abbrechen)");
-        System.out.print("> ");
-        choice = input.nextInt();
-
-        if (choice > 0){
-            this.tmpFahrzeugId = choice;
+        } else if (choice == 0) {
+            this.abbrechen = true;
             return false;
         } else {
             showMenuInfo();
@@ -94,9 +77,52 @@ public class EditBesitzverhaeltnis extends MainMenu {
         }
     }
 
+    private boolean chooseFahrzeug(){
+        String separatorLine = "-".repeat(23);
+        System.out.println("-2/2 Fahrzeug auswählen");
+        System.out.println(separatorLine);
+        var ref = new Object() {
+            int counter = 1;
+        };
+        this.fachkonzept.getAllFahrzeuge().forEach(currFahrzeug -> {
+            int fahrzeugId = currFahrzeug.getFahrzeugId();
+            Besitzer b = this.fachkonzept.getBesitzerByFahrzeug(fahrzeugId);
+            System.out.print(ref.counter + ":  " + currFahrzeug.getBezeichnung() + " (");
+            this.fahrzeugIds.add(fahrzeugId);
+            ref.counter = ref.counter + 1;
+            if (b != null){
+                System.out.print(b.getName() + ")\n");
+            } else {
+                System.out.print(")\n");
+            }
+        });
+        System.out.println(separatorLine);
+        System.out.println("Fahrzeug auswählen\n(0 = Zurück)");
+        int choice = Console.inputInt();
+
+        if (choice > 0){
+            this.tmpFahrzeugId = this.fahrzeugIds.get(choice - 1);
+            return false;
+        } else if (choice == 0) {
+            this.zurueck = true;
+            return false;
+        }
+        else {
+            showMenuInfo();
+            System.out.println("Ein Fehler ist aufgetreten.");
+            Console.pressEnterToContinue();
+            return true;
+        }
+    }
+
     @Override
     public boolean getUserChoice() {
-        Scanner input = new Scanner((System.in));
+        if (this.abbrechen) {
+            return false;
+        }
+        if (this.zurueck) {
+            return true;
+        }
 
         System.out.println(
                 "Das Fahrzeug '" +
@@ -104,7 +130,7 @@ public class EditBesitzverhaeltnis extends MainMenu {
                 "' '" + this.fachkonzept.getBesitzerDetails(this.tmpBesitzerId).getName() +
                 "' zuordnen?\n(j/N)"
         );
-        String choice = input.next();
+        String choice = Console.inputString();
         if (choice.equals("j") || choice.equals("J") || choice.equals("ja") || choice.equals("Ja")){
             this.fachkonzept.setNewBesitzer(this.tmpFahrzeugId, this.tmpBesitzerId);
             System.out.println("Wurde gespeichert.");

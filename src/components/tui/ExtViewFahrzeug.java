@@ -39,11 +39,9 @@ public class ExtViewFahrzeug extends MainMenu {
 
     @Override
     public boolean getUserChoice() {
-        Scanner input = new Scanner(System.in);
-
-        System.out.print("(Leer/0 = Zurück)\n> ");
+        System.out.println("(Leer/0 = Zurück)");
         while (true){
-            String choice = input.nextLine().trim();
+            String choice = Console.inputString();
             if (choice.isBlank() || choice.equals("0")) {
                 return false;
             }

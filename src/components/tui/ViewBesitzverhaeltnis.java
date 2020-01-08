@@ -40,12 +40,9 @@ public class ViewBesitzverhaeltnis extends MainMenu {
 
     @Override
     public boolean getUserChoice() {
-        Scanner input = new Scanner(System.in);
-
         System.out.println("(Leer/0 = Zurück)");
         while (true){
-            System.out.print("> ");
-            String choice = input.nextLine().trim();
+            String choice = Console.inputString();
             if (choice.isBlank() || choice.equals("0")) {
                 return false;
             }

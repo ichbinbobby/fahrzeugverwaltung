@@ -26,10 +26,8 @@ public class AddBesitzer extends MainMenu {
 
     @Override
     public boolean getUserChoice() {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Name des neuen Besitzers:\n(Leer/0 = Zurück)\n> ");
-
-        String name = input.nextLine().trim();
+        System.out.println("Name des neuen Besitzers:\n(Leer/0 = Zurück)");
+        String name = Console.inputString();
 
         if (name.isBlank() || name.equals("0")) {
             return false;

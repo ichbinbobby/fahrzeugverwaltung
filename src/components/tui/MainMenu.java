@@ -50,14 +50,7 @@ public class MainMenu {
 
     }
     public boolean getUserChoice() {
-        Scanner input = new Scanner(System.in);
-        int choice = -1;
-        System.out.print("> ");
-        choice = input.nextInt();
-//        while (!input.hasNextInt()){
-//            System.out.println("Keine gültige Eingabe");
-//            choice = input.nextInt();
-//        }
+        int choice = Console.inputInt();
 
         switch (choice){
             case 0:

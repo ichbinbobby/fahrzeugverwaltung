@@ -25,10 +25,9 @@ public class AddFahrzeug extends MainMenu {
 
     @Override
     public boolean getUserChoice() {
-        Scanner input = new Scanner(System.in);
-        System.out.print("Name des neuen Fahrzeugs:\n(Leer/0 = Zurück)\n> ");
+        System.out.println("Name des neuen Fahrzeugs:\n(Leer/0 = Zurück)");
 
-        String name = input.nextLine().trim();
+        String name = Console.inputString();
 
         if (name.isBlank() || name.equals("0")) {
             return false;
