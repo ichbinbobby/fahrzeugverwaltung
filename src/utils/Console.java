@@ -17,12 +17,16 @@ public final class Console {
     public static int inputInt(){
         Scanner input = new Scanner(System.in);
         System.out.print("> ");
-        while (!input.hasNextInt()){
+        Integer choice = null;
+        while (!input.hasNextInt() || (choice = input.nextInt()) < 0) {
             System.out.println("Keine gültige Eingabe");
-            input.next();
+            if(choice == null){
+                input.next();
+            }
             System.out.print("> ");
+            choice = null;
         }
-        return input.nextInt();
+        return choice;
     }
 
     public static String inputString(){

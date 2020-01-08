@@ -66,7 +66,7 @@ public class DeleteBesitzverhaeltnis extends MainMenu {
         int choice = Console.inputInt();
 
         if (choice > 0){
-            this.tmpBesitzerId = choice;
+            this.tmpBesitzerId = this.besitzerIds.get(choice-1);
             return false;
         } else if (choice == 0) {
             this.abbrechen = true;
