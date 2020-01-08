@@ -1,6 +1,7 @@
 package concepts;
 
 import models.Besitzer;
+import models.BesitzerMeta;
 import models.Fahrzeug;
 import models.FahrzeugMeta;
 import sql.ConnectionWrapper;
@@ -83,11 +84,11 @@ public class SqliteDatenhaltung implements IDatenhaltung {
     }
 
     @Override
-    public Stream<Besitzer> getAllBesitzer() {
+    public Stream<BesitzerMeta> getAllBesitzer() {
         String sql = "SELECT * FROM Besitzer";
         try {
             ResultSet rs = cw.ExecuteQuery(sql);
-            return resultSetToStream(rs, (resultSet) -> new Besitzer(resultSet.getInt("Id"), resultSet.getString("Name")));
+            return resultSetToStream(rs, (resultSet) -> new BesitzerMeta(resultSet.getInt("Id"), resultSet.getString("Name")));
         } catch (SQLException ex) {
             System.err.printf("Unable to get all Besitzer. Error: %s, StackTrace: %s\n", ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
@@ -120,11 +121,11 @@ public class SqliteDatenhaltung implements IDatenhaltung {
     }
 
     @Override
-    public Stream<Fahrzeug> getAllFahzeuge() {
+    public Stream<FahrzeugMeta> getAllFahzeuge() {
         String sql = "SELECT * FROM Fahrzeug";
         try {
             ResultSet rs = cw.ExecuteQuery(sql);
-            return resultSetToStream(rs, (resultSet) -> new Fahrzeug(resultSet.getInt("Id"), resultSet.getString("Bezeichnung")));
+            return resultSetToStream(rs, (resultSet) -> new FahrzeugMeta(resultSet.getInt("Id"), resultSet.getString("Bezeichnung")));
         } catch (SQLException ex) {
             System.err.printf("Unable to get all Fahrzeuge. Error: %s, StackTrace: %s\n", ex.getMessage(), Arrays.toString(ex.getStackTrace()));
         }
