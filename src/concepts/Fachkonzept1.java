@@ -45,7 +45,7 @@ public class Fachkonzept1 implements IFachkonzept {
     @Override
     public Stream<FahrzeugMeta> getAllFahrzeuge() {
         return this.datenhaltung.getAllFahzeuge()
-                .sorted((f1, f2) -> f1.getBezeichnung().compareTo(f2.getBezeichnung()))
+                .sorted((f1, f2) -> f1.getBezeichnung().compareToIgnoreCase(f2.getBezeichnung()))
                 .map(FahrzeugMeta::new);
     }
 
