@@ -41,7 +41,7 @@ public class EditBesitzer extends MainMenu {
 
         if (choice != 0){
             Besitzer besitzer = this.fachkonzept.getBesitzerDetails(choice);
-            System.out.print("Neuer Name des Besitzers "+ besitzer.getName() +":\n(Leer/0 = Abbrechen)\n> ");
+            System.out.print("Neuer Name des Besitzers "+ besitzer.getName() +":\n(0 = Abbrechen)\n> ");
             String name = input.next().trim();
 
             if (name.isBlank() || name.equals("0")) {

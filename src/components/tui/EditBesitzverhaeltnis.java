@@ -45,7 +45,7 @@ public class EditBesitzverhaeltnis extends MainMenu {
 
     private boolean chooseBesitzer(){
         String separatorLine = "-".repeat(23);
-        System.out.println(" 1/2 Besitzer auswählen");
+        System.out.println("-1/2 Besitzer auswählen");
         System.out.println(separatorLine);
         this.fachkonzept.getAllBesitzer().forEach(currBesitzer -> {
             System.out.println(currBesitzer.getBesitzerId() + ":  " + currBesitzer.getName());
@@ -73,7 +73,7 @@ public class EditBesitzverhaeltnis extends MainMenu {
 
     private boolean chooseFahrzeug(){
         String separatorLine = "-".repeat(23);
-        System.out.println(" 2/2 Fahrzeug auswählen");
+        System.out.println("-2/2 Fahrzeug auswählen");
         System.out.println(separatorLine);
         this.fachkonzept.getAllFahrzeuge().forEach(currFahrzeug -> {
             int fahrzeugId = currFahrzeug.getFahrzeugId();

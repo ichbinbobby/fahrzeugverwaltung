@@ -32,6 +32,8 @@ public class DeleteBesitzverhaeltnis extends MainMenu {
         }
         showMenuInfo();
         System.out.println(separatorLine);
+        System.out.println("-2/2 Fahrzeug auswählen");
+        System.out.println(separatorLine);
         this.fachkonzept.getFahrzeugeByBesitzer(this.tmpBesitzerId).forEach(currFahrzeug -> {
             System.out.println(currFahrzeug.getFahrzeugId() + ":  " + currFahrzeug.getBezeichnung());
         });
@@ -40,7 +42,7 @@ public class DeleteBesitzverhaeltnis extends MainMenu {
 
     private boolean chooseBesitzer(){
         String separatorLine = "-".repeat(24);
-        System.out.println(" 1/2 Besitzer auswählen");
+        System.out.println("-1/2 Besitzer auswählen");
         System.out.println(separatorLine);
         this.fachkonzept.getAllBesitzer().forEach(currBesitzer -> {
             System.out.println(currBesitzer.getBesitzerId() + ":  " + currBesitzer.getName());

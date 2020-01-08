@@ -10,7 +10,7 @@ import java.util.stream.Stream;
 public class Fachkonzept2 implements IFachkonzept {
     private IDatenhaltung datenhaltung;
 
-    Fachkonzept2(IDatenhaltung datenhaltung){
+    public Fachkonzept2(IDatenhaltung datenhaltung){
         this.datenhaltung = datenhaltung;
     }
 
