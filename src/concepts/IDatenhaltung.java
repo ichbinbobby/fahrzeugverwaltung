@@ -1,15 +1,16 @@
 package concepts;
 
 import models.Besitzer;
+import models.BesitzerMeta;
 import models.Fahrzeug;
 import models.FahrzeugMeta;
 
 import java.util.stream.Stream;
 
 public interface IDatenhaltung {
-    Stream<Besitzer> getAllBesitzer();
+    Stream<BesitzerMeta> getAllBesitzer();
 
-    Stream<Fahrzeug> getAllFahzeuge();
+    Stream<FahrzeugMeta> getAllFahzeuge();
 
     Stream<FahrzeugMeta> getFahrzeugeByBesitzer(int besitzerId);
 
