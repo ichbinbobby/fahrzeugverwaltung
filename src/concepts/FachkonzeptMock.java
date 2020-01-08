@@ -22,9 +22,9 @@ public class FachkonzeptMock implements IFachkonzept {
         besitzerList.put(2, new Besitzer(2, "Max"));
         besitzerList.put(3, new Besitzer(3, "Franz"));
         besitzerList.put(4, new Besitzer(4, "Wilfred"));
-        besitzerList.put(5, new Besitzer(5, "Listate"));
+        besitzerList.put(5, new Besitzer(5, "Listarte"));
         besitzerList.put(6, new Besitzer(6, "Jana"));
-        besitzerList.put(7, new Besitzer(7, "Thomas"));
+        besitzerList.put(7, new Besitzer(7, "Elon"));
 
         fahrzeugList.put(1, new Fahrzeug(1, "Cybertruck"));
         fahrzeugList.put(2, new Fahrzeug(2, "Tesla"));
@@ -52,7 +52,7 @@ public class FachkonzeptMock implements IFachkonzept {
     }
 
     @Override
-    public Besitzer getBeistzerByFahrzeug(int fahrzeugId) {
+    public Besitzer getBesitzerByFahrzeug(int fahrzeugId) {
         return besitzerList.getOrDefault(fahrzeugeBesitzerMapping.getOrDefault(fahrzeugId, -1), null);
     }
 

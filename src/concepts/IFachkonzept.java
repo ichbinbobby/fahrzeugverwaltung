@@ -12,7 +12,7 @@ public interface IFachkonzept {
 
     Besitzer getBesitzerDetails(int besitzerId);
 
-    Besitzer getBeistzerByFahrzeug(int fahrzeugId);
+    Besitzer getBesitzerByFahrzeug(int fahrzeugId);
 
     int saveBesitzer(Besitzer besitzer);
 

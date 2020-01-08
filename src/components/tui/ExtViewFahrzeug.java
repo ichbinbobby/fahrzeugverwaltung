@@ -24,7 +24,7 @@ public class ExtViewFahrzeug extends MainMenu {
     public void showReachableMenus() {
         int fahrzeugId = this.fahrzeugId;
         String bezeichnung = this.fachkonzept.getFahrzeugDetails(fahrzeugId).getBezeichnung();
-        Besitzer besitzer = this.fachkonzept.getBeistzerByFahrzeug(fahrzeugId);
+        Besitzer besitzer = this.fachkonzept.getBesitzerByFahrzeug(fahrzeugId);
         String separatorLine = "-".repeat(22);
         String besitzerName = "Kein Besitzer";
         if (besitzer != null){

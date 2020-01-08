@@ -10,6 +10,10 @@ public class Fahrzeug extends FahrzeugMeta {
         super(fahrzeugId, bezeichnung);
     }
 
+    public Fahrzeug(String name) {
+        this(-1, name);
+    }
+
     @Override
     public Fahrzeug setFahrzeugId(int fahrzeugId) {
         return (Fahrzeug) super.setFahrzeugId(fahrzeugId);
