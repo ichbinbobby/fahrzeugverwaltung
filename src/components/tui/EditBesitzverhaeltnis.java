@@ -4,6 +4,8 @@ import concepts.IFachkonzept;
 import models.Besitzer;
 import utils.Console;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class EditBesitzverhaeltnis extends MainMenu {
@@ -11,6 +13,8 @@ public class EditBesitzverhaeltnis extends MainMenu {
     private int tmpFahrzeugId;
     private boolean abbrechen = false;
     private boolean zurueck = false;
+    private List<Integer> besitzerIds = new ArrayList<Integer>();
+    private List<Integer> fahrzeugIds = new ArrayList<Integer>();
 
     EditBesitzverhaeltnis(IFachkonzept fachkonzept){
         super(fachkonzept);
@@ -47,15 +51,20 @@ public class EditBesitzverhaeltnis extends MainMenu {
         String separatorLine = "-".repeat(23);
         System.out.println("-1/2 Besitzer auswählen");
         System.out.println(separatorLine);
+        var ref = new Object() {
+            int counter = 1;
+        };
         this.fachkonzept.getAllBesitzer().forEach(currBesitzer -> {
-            System.out.println(currBesitzer.getBesitzerId() + ":  " + currBesitzer.getName());
+            System.out.println(ref.counter + ":  " + currBesitzer.getName());
+            this.besitzerIds.add(currBesitzer.getBesitzerId());
+            ref.counter = ref.counter + 1;
         });
         System.out.println(separatorLine);
         System.out.println("Besitzer auswählen\n(0 = Abbrechen)");
         int choice = Console.inputInt();
 
         if (choice > 0){
-            this.tmpBesitzerId = choice;
+            this.tmpBesitzerId = this.besitzerIds.get(choice - 1);
             return false;
         } else if (choice == 0) {
             this.abbrechen = true;
@@ -72,10 +81,15 @@ public class EditBesitzverhaeltnis extends MainMenu {
         String separatorLine = "-".repeat(23);
         System.out.println("-2/2 Fahrzeug auswählen");
         System.out.println(separatorLine);
+        var ref = new Object() {
+            int counter = 1;
+        };
         this.fachkonzept.getAllFahrzeuge().forEach(currFahrzeug -> {
             int fahrzeugId = currFahrzeug.getFahrzeugId();
             Besitzer b = this.fachkonzept.getBesitzerByFahrzeug(fahrzeugId);
-            System.out.print(fahrzeugId + ":  " + currFahrzeug.getBezeichnung() + " (");
+            System.out.print(ref.counter + ":  " + currFahrzeug.getBezeichnung() + " (");
+            this.fahrzeugIds.add(fahrzeugId);
+            ref.counter = ref.counter + 1;
             if (b != null){
                 System.out.print(b.getName() + ")\n");
             } else {
@@ -87,7 +101,7 @@ public class EditBesitzverhaeltnis extends MainMenu {
         int choice = Console.inputInt();
 
         if (choice > 0){
-            this.tmpFahrzeugId = choice;
+            this.tmpFahrzeugId = this.fahrzeugIds.get(choice - 1);
             return false;
         } else if (choice == 0) {
             this.zurueck = true;
