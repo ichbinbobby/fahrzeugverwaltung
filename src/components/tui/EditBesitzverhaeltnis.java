@@ -9,6 +9,8 @@ import java.util.Scanner;
 public class EditBesitzverhaeltnis extends MainMenu {
     private int tmpBesitzerId;
     private int tmpFahrzeugId;
+    private boolean abbrechen = false;
+    private boolean zurueck = false;
 
     EditBesitzverhaeltnis(IFachkonzept fachkonzept){
         super(fachkonzept);
@@ -27,6 +29,9 @@ public class EditBesitzverhaeltnis extends MainMenu {
         System.out.println(separatorLine);
         while (run){
             run = chooseBesitzer();
+        }
+        if (this.abbrechen){
+            return;
         }
         showMenuInfo();
         System.out.println(separatorLine);
@@ -55,9 +60,13 @@ public class EditBesitzverhaeltnis extends MainMenu {
         if (choice > 0){
             this.tmpBesitzerId = choice;
             return false;
+        } else if (choice == 0) {
+            this.abbrechen = true;
+            return false;
         } else {
             showMenuInfo();
             System.out.println("Ein Fehler ist aufgetreten.");
+            Console.pressEnterToContinue();
             return true;
         }
     }
@@ -79,14 +88,18 @@ public class EditBesitzverhaeltnis extends MainMenu {
         Scanner input = new Scanner(System.in);
         int choice = -1;
         System.out.println(separatorLine);
-        System.out.println("Fahrzeug auswählen\n(0 = Abbrechen)");
+        System.out.println("Fahrzeug auswählen\n(0 = Zurück)");
         System.out.print("> ");
         choice = input.nextInt();
 
         if (choice > 0){
             this.tmpFahrzeugId = choice;
             return false;
-        } else {
+        } else if (choice == 0) {
+            this.zurueck = true;
+            return false;
+        }
+        else {
             showMenuInfo();
             System.out.println("Ein Fehler ist aufgetreten.");
             Console.pressEnterToContinue();
@@ -96,6 +109,12 @@ public class EditBesitzverhaeltnis extends MainMenu {
 
     @Override
     public boolean getUserChoice() {
+        if (this.abbrechen) {
+            return false;
+        }
+        if (this.zurueck) {
+            return true;
+        }
         Scanner input = new Scanner((System.in));
 
         System.out.println(

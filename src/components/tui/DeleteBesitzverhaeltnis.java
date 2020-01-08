@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class DeleteBesitzverhaeltnis extends MainMenu {
     private int tmpBesitzerId;
+    private boolean abbrechen = false;
 
     DeleteBesitzverhaeltnis(IFachkonzept fachkonzept){
         super(fachkonzept);
@@ -26,6 +27,9 @@ public class DeleteBesitzverhaeltnis extends MainMenu {
         while (run) {
             run = chooseBesitzer();
         }
+        if (this.abbrechen){
+            return;
+        }
         showMenuInfo();
         System.out.println(separatorLine);
         this.fachkonzept.getFahrzeugeByBesitzer(this.tmpBesitzerId).forEach(currFahrzeug -> {
@@ -43,6 +47,7 @@ public class DeleteBesitzverhaeltnis extends MainMenu {
         });
         Scanner input = new Scanner(System.in);
         int choice = -1;
+        System.out.println(separatorLine);
         System.out.println("Besitzer auswählen\n(0 = Abbrechen)");
         System.out.print("> ");
         choice = input.nextInt();
@@ -50,15 +55,22 @@ public class DeleteBesitzverhaeltnis extends MainMenu {
         if (choice > 0){
             this.tmpBesitzerId = choice;
             return false;
+        } else if (choice == 0) {
+            this.abbrechen = true;
+            return false;
         } else {
-            showMenuInfo();
-            System.out.println("Ein Fehler ist aufgetreten.");
-            return true;
+                showMenuInfo();
+                System.out.println("Ein Fehler ist aufgetreten.");
+                Console.pressEnterToContinue();
+                return true;
         }
     }
 
     @Override
     public boolean getUserChoice() {
+        if (this.abbrechen) {
+            return false;
+        }
         Scanner input = new Scanner(System.in);
         int choice = -1;
         System.out.print("Fahrzeug auswählen\n(0 = Zurück)\n> ");
@@ -68,7 +80,7 @@ public class DeleteBesitzverhaeltnis extends MainMenu {
 //        }
         choice = input.nextInt();
 
-        if (choice >= 0){
+        if (choice > 0){
             if (this.fachkonzept.setNewBesitzer(choice, -1)) {
                 System.out.println("Löschen erfolgreich.");
                 Console.pressEnterToContinue();
@@ -78,6 +90,8 @@ public class DeleteBesitzverhaeltnis extends MainMenu {
                 Console.pressEnterToContinue();
                 return true;
             }
+        } else if(choice == 0){
+            return true;
         } else return true;
     }
 }
