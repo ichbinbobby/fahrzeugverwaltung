@@ -23,12 +23,12 @@ Projektzeitraum vom 27.08.2019 bis 08.01.2020.
 Um das Projekt effizient anzugehen wird die Arbeit auf die drei Mitglieder verteilt. 
 
 Beim ersten Meilenstein werden die Interfaces in Zusammenarbeit aller drei Mitglieder ausdefiniert, sodass alle wichtigen Methoden besprochen werden, die von den Interfaces implementiert werden müssen. 
-Für die UI Implementierung wird Herr Böke an der TUI Implementierung arbeiten während Herr N. sich mit der GUI Implementierung befasst. Herr Leinweber wird zwischen TUI und GUI abwechselnd mit Herrn N. und Herrn B. im Pair-Programming arbeiten. 
+Für die UI Implementierung wird Herr B. an der TUI Implementierung arbeiten während Herr N. sich mit der GUI Implementierung befasst. Herr L. wird zwischen TUI und GUI abwechselnd mit Herrn N. und Herrn B. im Pair-Programming arbeiten. 
 
 Daraufhin wird die Datenhaltung implementiert mit Fokus auf die SQLite Implementation, da diese wegen der selbstzuschreibenden SQL Befehle eine höhere Komplexität besitzt werden die Mitglieder N. und L. primär an diesem arbeiten. Herr B. arbeitet dann an der Datenhaltung mit JSON. 
 
 Für den Meilenstein vier muss Recherche zum Strategy-Pattern gemacht werden, um die Fachkonzepte zu entwickeln. Die Recherche wird von allen drei Mitgliedern einzeln gemacht und zusammengetragen. 
-Mit dem neu erlangten wissen werden die Fachkonzepte nach der Strategie von der UI implementiert. Herr N. und Herr B. arbeiten an Fachkonzept eins und Fachkonzept zwei respektive und Herr Leinweber wechselt zwischen den Fachkonzepten. 
+Mit dem neu erlangten wissen werden die Fachkonzepte nach der Strategie von der UI implementiert. Herr N. und Herr B. arbeiten an Fachkonzept eins und Fachkonzept zwei respektive und Herr L. wechselt zwischen den Fachkonzepten. 
 
 Das letzte Meilenstein besteht aus Testen der Software und der Fehlerbehebung. Hier werden alle Mitglieder parallel testen und alle Fehler beheben.
 
