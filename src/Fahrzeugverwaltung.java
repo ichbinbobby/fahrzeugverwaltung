@@ -1,10 +1,12 @@
-import components.datenhaltung.Datenhaltung2;
-import components.tui.Tui;
-import concepts.Fachkonzept1;
-import concepts.Fachkonzept2;
+import components.datenhaltung.DatenhaltungFactory;
+import components.datenhaltung.DatenhaltungsTyp;
+import components.gui.GraphicalUserInterface;
+import concepts.Fachkonzept;
+import sortingBehaviour.NaturalSorting;
 
 public class Fahrzeugverwaltung {
     public static void main(String[] args) {
-        new Tui(new Fachkonzept1(new Datenhaltung2()));
+        var datenhaltung = DatenhaltungFactory.createDatenhaltung(DatenhaltungsTyp.Json);
+        new GraphicalUserInterface(new Fachkonzept(datenhaltung, new NaturalSorting()));
     }
 }

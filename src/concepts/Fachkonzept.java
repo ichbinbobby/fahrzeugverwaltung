@@ -4,21 +4,28 @@ import models.Besitzer;
 import models.BesitzerMeta;
 import models.Fahrzeug;
 import models.FahrzeugMeta;
+import sortingBehaviour.ISortingBehaviour;
+import sortingBehaviour.NaturalSorting;
 
 import java.util.stream.Stream;
 
-public class Fachkonzept2 implements IFachkonzept {
+public class Fachkonzept implements IFachkonzept {
     private IDatenhaltung datenhaltung;
+    private ISortingBehaviour sortingBehaviour;
 
-    public Fachkonzept2(IDatenhaltung datenhaltung){
+    public Fachkonzept(IDatenhaltung datenhaltung) {
         this.datenhaltung = datenhaltung;
+        this.sortingBehaviour = new NaturalSorting();
+    }
+
+    public Fachkonzept(IDatenhaltung datenhaltung, ISortingBehaviour sortingBehaviour) {
+        this.datenhaltung = datenhaltung;
+        this.sortingBehaviour = sortingBehaviour;
     }
 
     @Override
     public Stream<BesitzerMeta> getAllBesitzer() {
-        return this.datenhaltung.getAllBesitzer()
-                .sorted((b1, b2) -> b2.getName().compareTo(b1.getName()))
-                .map(BesitzerMeta::new);
+        return this.sortingBehaviour.sort(this.datenhaltung.getAllBesitzer());
     }
 
     @Override
@@ -43,9 +50,7 @@ public class Fachkonzept2 implements IFachkonzept {
 
     @Override
     public Stream<FahrzeugMeta> getAllFahrzeuge() {
-        return this.datenhaltung.getAllFahzeuge()
-                .sorted((f1, f2) -> f2.getBezeichnung().compareToIgnoreCase(f1.getBezeichnung()))
-                .map(FahrzeugMeta::new);
+        return this.sortingBehaviour.sort(this.datenhaltung.getAllFahzeuge(), (f1, f2) -> f1.getBezeichnung().compareToIgnoreCase(f2.getBezeichnung()));
     }
 
     @Override

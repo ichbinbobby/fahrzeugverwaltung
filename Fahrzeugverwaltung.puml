@@ -1,0 +1,279 @@
+@startuml
+skinparam classFontSize 15
+skinparam classAttributeFontsize 15
+
+package utils {
+    class Console {
+        - {static} newLines: String
+        + {static} clear(): void
+        + {static} pressEnterToContinue(): void
+        + {static} inputInteger(): int
+        + {static} inputString(): String
+    }
+}
+
+package sql {
+    class ConnectionWrapper {
+        - {static} _instance: ConnectionWrapper;
+        + {static} getInstance(): ConnectionWrapper;
+        - connection: Connection
+        + executeQuery(sql: String, parameters: SqlParameter[]): ResultSet
+        + executeQuery(sql: String): ResultSet
+        + execute(sql: String, parameters: SqlParameter[]): void
+        + execute(sql: String): void
+        + executeUpdate(sql: String, parameters: SqlParameter[]): UpdateResult
+        + executeUpdate(sql: String): UpdateResult
+    }
+
+    class UpdateResult {
+        + updatedRows: int
+        + generatedKeys: ResultSet
+        UpdateResult(updatedRows: int, generatedKeys: ResultSet)
+    }
+
+    class SqlParameter {
+        + index: int
+        + value: Object
+        + parameterType: SqlParameterType
+
+        + SqlParameter(index: int, value: Object)
+        + SqlParameter(index: int, value: Object, parameterType: SqlParameterType)
+        + addToStatement(statement: java.sql.PreparedStatement): void
+    }
+
+    enum SqlParameterType {
+        INT,
+        STRING,
+        NULL
+    }
+
+    ConnectionWrapper -- SqlParameter
+    ConnectionWrapper -- UpdateResult
+    SqlParameter -- SqlParameterType
+}
+
+package models {
+    class BesitzerMeta {
+        + BesiterMeta(id: String, name: String)
+        + BesitzerMeta(name: String)
+
+        # id: int
+        # name: int
+        + getBesitzerId(): int
+        + getName(): String
+        + setBesitzerId(id: int): void
+        + setName(name: String): void
+    }
+
+    class Besitzer extends BesitzerMeta {
+        + Besitzer(id: int, name: String)
+        + Besitzer(name: String)
+    }
+
+    class FahrzeugMeta {
+        + FahrzeugMeta(id: String, bezeichnung: String)
+        + FahrzeugMeta(bezeichnung: String)
+
+        # id: int
+        # bezeichnung: int
+        + getFahrzeugId(): int
+        + getBezeichnung(): String
+        + setFahrzeugId(id: int): void
+        + setBezeichnung(bezeichnung: String): void
+    }
+
+    class Fahrzeug extends FahrzeugMeta {
+        + Fahrzeug(id: int, name: String)
+        + Fahrzeug(name: String)
+    }
+
+    class Besitzverhaeltnisse {
+        - besitzerId: int
+        - fahrzeuge: Set<Integer>
+        + getBesitzerId(): int
+        + setBesitzerId(id: int): void
+        + getFahrzeuge(): Set<Integer>
+        + setFahrzeuge(fahrzeuge: Set<Integer>): void
+    }
+
+    class JSON {
+        - besitzer: Besitzer[]
+        - fahrzeuge: Fahrzeug[]
+        - besitzverhaeltnisse: Besitzverhaeltnisse[]
+        + getBesitzer(): Besitzer[]
+        + setBesitzer(besitzer: Besitzer[]): void
+        + getFahrzeuge(): Fahrzeuge[]
+        + setFahrzeuge(fahrzeuge: Fahrzeuge[]): void
+        + getBesitzverhaeltnisse(): Besitzverhaeltnisse[]
+        + setBesitzverhaeltnisse(besitzverhaeltnisse: Besitzverhaeltnisse[]): void
+    }
+
+    'JSON -- Besitzverhaeltnisse
+    'JSON -- Besitzer
+    'JSON -- Fahrzeug
+}
+
+
+package components{
+    package businessLayer{
+    package konzepte {
+        class FachkonzeptMock implements IFachkonzept {
+            - besitzerList: HashMap<Integer, Besitzer>
+            - fahrzeugList: HashMap<Integer, Fahrzeug>
+            - besitzerFahrzeugeMapping: Map<Integer, Set<Integer>>
+            - fahrzeugeBesitzerMapping: Map<Integer, Integer>
+            - maxBesitzerId: int
+            - maxFahrzeugId: int
+
+            - removeMappingsByFahrzeug(fahrzeugId: int): void
+            - removeMappingsByBesitzer(besitzerId: int): void
+        }
+
+        class Fachkonzept1 implements IFachkonzept
+        class Fachkonzept2 implements IFachkonzept
+
+        interface IFachkonzept{
+            getAllBesitzer(): Stream<BesitzerMeta>
+            getBesitzerDetails(int besitzerId): Besitzer
+            getBeistzerByFahrzeug(int fahrzeugId): Besitzer
+            saveBesitzer(Besitzer besitzer): int
+            deleteBesitzer(int besitzerId): boolean
+            getAllFahrzeuge(): Stream<FahrzeugMeta>
+            getFahrzeugDetails(int fahrzeugId): Fahrzeug
+            getFahrzeugeByBesitzer(int besitzerId): Stream<FahrzeugMeta>
+            saveFahrzeug(Fahrzeug fahrzeug): int
+            deleteFahrzeug(int fahrzeugId): boolean
+            setNewBesitzer(int fahrzeugId, int besitzerId): boolean
+        }
+
+        'IFachkonzept -- Besitzer
+        'IFachkonzept -- Fahrzeug
+    }
+    }
+    package dataLayer {
+    package datenhaltung {
+        class SqliteDatenhaltung implements IDatenhaltung {
+            - cw: ConnectionWrapper
+            - createBesitzerTable(): void
+            - createFahrzeugTable(): void
+            - createDummyValues(): void
+            - enableForeignKeys(): void
+            - insertNewBesitzer(name: String): void
+            - insertNewFahrzeug(bezeichnung: String, besitzerId: int): void
+            - resultSetToStream<T>(resultSet: ResultSet, ResultSetMap<T> mapFunction): Stream<T>
+            - insertBesitzer(besitzer: Besitzer): int
+            - updateBesitzer(besitzer: Besitzer): int
+            - insertFahrzeug(fahrzeug: Fahrzeug): int
+            - updateFahrzeug(fahrzeug: Fahrzeug): int
+        }
+
+        'SqliteDatenhaltung -- ConnectionWrapper
+
+        class JsonDatenhaltung implements IDatenhaltung {
+            - gson: Gson
+            - path: Path
+            - createFileIfNotExist(): void
+            - readJSON(): JSON
+            - writeJSON(json: JSON): void
+            - deleteFahrzeugIdFromBesitzverhaeltnisse(json: JSON, fahrzeugId: int): JSON
+        }
+
+        'JsonDatenhaltung -- JSON
+
+        interface IDatenhaltung {
+            getAllBesitzer(): Stream<BesitzerMeta>
+            getAllFahzeuge(): Stream<FahrzeugMeta>
+            getFahrzeugeByBesitzer(int besitzerId): Stream<FahrzeugMeta>
+            getBesitzerByFahrzeug(int fahrzeugId): Besitzer
+            getBesitzerDetails(int besitzerId): Besitzer
+            getFahrzeugDetails(int fahrzeugId): Fahrzeug
+            saveBesitzer(Besitzer besitzer): int
+            saveFahrzeug(Fahrzeug fahrzeug): int
+            deleteBesitzer(int besitzerId): boolean
+            deleteFahrzeug(int fahrzeugId): boolean
+            setNewBesitzer(int fahrzeugId, int besitzerId): boolean
+        }
+
+        'IDatenhaltung -- Besitzer
+        'IDatenhaltung -- Fahrzeug
+    }
+    }
+    package view {
+    package gui {
+        Gui *-- GraphicalUserInterface
+        class GraphicalUserInterface{
+            - besitzerListModel: DefaultListModel<BesitzerMeta>
+            - fahrzeugListModel: DefaultListModel<FahrzeugMeta>
+            - besitzerList: JList<BesitzerMeta>
+            - fahrzeugList: JList<FahrzeugMeta>
+            - mainPanel: JPanel
+            - besitzerPanel: JPanel
+            - fahrzeugPanel: JPanel
+            - addBesitzerTextField: JTextField
+            - addFahrzeugTextField: JTextField
+            - addBesitzerBtn: JButton
+            - addFahrzeugBtn: JButton
+            - deleteBesitzerBtn: JButton
+            - deleteFahrzeugBtn: JButton
+            - besitzerScrollPane: JScrollPane
+            - fahrzeugScrollPane: JScrollPane
+            - verbindenButton: JButton
+
+            - deleteElement<T>(list: DefaultListModel<T>, index: int): void
+        }
+
+        'GraphicalUserInterface -- BesitzerMeta
+        'GraphicalUserInterface -- FahrzeugMeta
+    }
+
+    package tui {
+        class MainMenu {
+            + showMenu(): void
+            + showMenuInfo(): void
+            + showReachableMenus(): void
+            + getUserChoice(): boolean
+        }
+
+        class ExtViewBesitzer extends MainMenu {
+            - fahrzeugId: int
+        }
+
+        class ExtViewFahrzeug extends MainMenu {
+            - besitzerId: int
+        }
+
+        class EditBesitzverhaeltnis extends MainMenu {
+            - tmpBesitzerId: int
+            - tmpFahrzeugId: int
+            - abbrechen: boolean
+            - zurueck: boolean
+            - chooseBesitzer(): boolean
+            - chooseFahrzeug(): boolean
+        }
+
+        class DeleteBesitzverhaeltnis extends MainMenu {
+            - abbrechen: boolean
+        }
+
+        AddBesitzer --|> MainMenu
+        AddFahrzeug --|> MainMenu
+        DeleteBesitzer --|> MainMenu
+        DeleteFahrzeug --|> MainMenu
+        EditBesitzer --|> MainMenu
+        EditFahrzeug --|> MainMenu
+        ViewBesitzer --|> MainMenu
+        ViewBesitzverhaeltnis --|> MainMenu
+        ViewFahrzeug --|> MainMenu
+
+        MainMenu --* Tui
+    }
+    }
+}
+
+Tui -- IFachkonzept : benutzt >
+Gui -- IFachkonzept : benutzt >
+
+Fachkonzept1 -- IDatenhaltung : benutzt >
+Fachkonzept2 -- IDatenhaltung : benutzt >
+
+@enduml

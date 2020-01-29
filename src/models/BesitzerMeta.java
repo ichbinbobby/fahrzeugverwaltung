@@ -1,6 +1,8 @@
 package models;
 
-public class BesitzerMeta {
+import org.jetbrains.annotations.NotNull;
+
+public class BesitzerMeta implements Comparable<BesitzerMeta> {
 
     public BesitzerMeta(String name) {
         this(-1, name);
@@ -34,5 +36,10 @@ public class BesitzerMeta {
     public BesitzerMeta setName(String name) {
         this._name = name;
         return this;
+    }
+
+    @Override
+    public int compareTo(@NotNull BesitzerMeta o) {
+        return getName().compareToIgnoreCase(o.getName());
     }
 }

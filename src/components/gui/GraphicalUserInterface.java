@@ -1,6 +1,5 @@
 package components.gui;
 
-import concepts.FachkonzeptMock;
 import concepts.IFachkonzept;
 import models.Besitzer;
 import models.BesitzerMeta;
@@ -16,6 +15,7 @@ import java.lang.reflect.Proxy;
 import java.util.function.Function;
 
 public class GraphicalUserInterface {
+    private IFachkonzept fachKonzept;
     protected IFachkonzept fachkonzept;
     private final DefaultListModel<BesitzerMeta> besitzerListModel;
     private final DefaultListModel<FahrzeugMeta> fahrzeugListModel;
@@ -35,6 +35,15 @@ public class GraphicalUserInterface {
     private JButton verbindenButton;
 
     public GraphicalUserInterface(IFachkonzept fachkonzept) {
+        JFrame frame = new JFrame();
+
+        frame.setContentPane(this.mainPanel);
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.pack();
+        frame.setTitle("Fahrzeugverwaltung");
+        frame.setSize(600, 600);
+        frame.setVisible(true);
+
         this.fachkonzept = fachkonzept;
         this.verbindenButton.setForeground(Color.LIGHT_GRAY);
         this.verbindenButton.setEnabled(false);
@@ -160,20 +169,6 @@ public class GraphicalUserInterface {
             }
             fahrzeugList.updateUI();
         });
-    }
-
-
-    public static void main(String[] args) {
-        JFrame f = new JFrame();
-        IFachkonzept fachKonzept = new FachkonzeptMock();
-        GraphicalUserInterface gui = new GraphicalUserInterface(fachKonzept);
-
-        f.setContentPane(gui.mainPanel);
-        f.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        f.pack();
-        f.setTitle("Fahrzeugverwaltung");
-        f.setSize(600,600);
-        f.setVisible(true);
     }
 
     private <T> void deleteElement(DefaultListModel<T> list, int index) {
